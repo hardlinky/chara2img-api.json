@@ -8,11 +8,13 @@ RUN comfy node install --exit-on-fail ComfyUI_ADV_CLIP_emb
 RUN comfy node install --exit-on-fail comfy-image-saver
 RUN comfy node install --exit-on-fail comfyui-image-saver@1.21.0
 RUN comfy node install --exit-on-fail was-node-suite-comfyui@1.0.2
+RUN comfy node install --exit-on-fail ComfyUI-KJNodes@1.3.1
 RUN comfy node install --exit-on-fail comfyui-promptbuilder@2.0.1
 RUN comfy node install --exit-on-fail comfyui-easy-use@1.3.6
 RUN comfy node install --exit-on-fail comfyui-impact-pack@8.28.2
+RUN comfy node install --exit-on-fail comfyui-impact-subpack@1.3.5
 RUN comfy node install --exit-on-fail ComfyUI-mxToolkit
-RUN comfy node install --exit-on-fail ComfyUI_essentials
+RUN comfy node install --exit-on-fail ComfyUI_UltimateSDUpscale
 
 # create model subdirectories
 RUN mkdir -p /comfyui/models/ultralytics/segm
