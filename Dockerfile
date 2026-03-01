@@ -2,18 +2,22 @@
 FROM runpod/worker-comfyui:5.5.1-base
 
 # install custom nodes into comfyui (first node with --mode remote to fetch updated cache)
-RUN comfy node install --exit-on-fail rgthree-comfy@1.0.2512112053 --mode remote
-RUN comfy node install --exit-on-fail comfyui-fbcnn@1.0.1
-RUN comfy node install --exit-on-fail ComfyUI_ADV_CLIP_emb
-RUN comfy node install --exit-on-fail comfyui-image-saver@1.21.0
-RUN comfy node install --exit-on-fail was-node-suite-comfyui@1.0.2
-RUN comfy node install --exit-on-fail ComfyUI-KJNodes@1.3.1
-RUN comfy node install --exit-on-fail comfyui-promptbuilder@2.0.1
+RUN comfy node install --exit-on-fail ComfyUI_ADV_CLIP_emb --mode remote
 RUN comfy node install --exit-on-fail comfyui-easy-use@1.3.6
+RUN comfy node install --exit-on-fail comfyui-fbcnn@1.0.1
+RUN comfy node install --exit-on-fail comfyui-image-saver@1.21.0
 RUN comfy node install --exit-on-fail comfyui-impact-pack@8.28.2
 RUN comfy node install --exit-on-fail comfyui-impact-subpack@1.3.5
-RUN comfy node install --exit-on-fail ComfyUI-mxToolkit
-RUN comfy node install --exit-on-fail ComfyUI_UltimateSDUpscale
+RUN comfy node install --exit-on-fail comfyui-promptbuilder@2.0.1
+RUN comfy node install --exit-on-fail rgthree-comfy@1.0.2512112053
+RUN comfy node install --exit-on-fail was-node-suite-comfyui@1.0.2
+
+#RUN comfy node install --exit-on-fail ComfyUI-mxToolkit
+RUN cd /comfyui/custom_nodes && git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git && cd /
+#RUN comfy node install --exit-on-fail ComfyUI-KJNodes@1.3.1
+RUN cd /comfyui/custom_nodes && git clone https://github.com/kijai/ComfyUI-KJNodes && cd /
+#RUN comfy node install --exit-on-fail ComfyUI_UltimateSDUpscale
+RUN cd /comfyui/custom_nodes && git clone https://github.com/ssitu/ComfyUI_UltimateSDUpscale && cd /
 
 # create model subdirectories
 RUN mkdir -p /comfyui/models/ultralytics/segm
