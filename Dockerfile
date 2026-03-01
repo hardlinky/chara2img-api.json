@@ -5,7 +5,6 @@ FROM runpod/worker-comfyui:5.5.1-base
 RUN comfy node install --exit-on-fail rgthree-comfy@1.0.2512112053 --mode remote
 RUN comfy node install --exit-on-fail comfyui-fbcnn@1.0.1
 RUN comfy node install --exit-on-fail ComfyUI_ADV_CLIP_emb
-RUN comfy node install --exit-on-fail comfy-image-saver
 RUN comfy node install --exit-on-fail comfyui-image-saver@1.21.0
 RUN comfy node install --exit-on-fail was-node-suite-comfyui@1.0.2
 RUN comfy node install --exit-on-fail ComfyUI-KJNodes@1.3.1
