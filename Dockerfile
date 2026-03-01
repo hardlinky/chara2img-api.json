@@ -12,6 +12,7 @@ RUN comfy node install --exit-on-fail comfyui-promptbuilder@2.0.1
 RUN comfy node install --exit-on-fail comfyui-easy-use@1.3.6
 RUN comfy node install --exit-on-fail comfyui-impact-pack@8.28.2
 RUN comfy node install --exit-on-fail ComfyUI-mxToolkit
+RUN comfy node install --exit-on-fail ComfyUI_essentials
 
 # create model subdirectories
 RUN mkdir -p /comfyui/models/ultralytics/segm
@@ -31,6 +32,9 @@ RUN comfy model download --url https://huggingface.co/Ine007/waiIllustriousSDXL_
 RUN comfy model download --url https://huggingface.co/MIUProject/VNCCS/resolve/main/models/upscale_models/4x_APISR_GRL_GAN_generator.pth --relative-path models/upscale_models --filename 4x_APISR_GRL_GAN_generator.pth
 RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/main/person_yolov8m-seg.pt --relative-path models/ultralytics/segm --filename person_yolov8m-seg.pt
 RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/main/face_yolov8m.pt --relative-path models/ultralytics/bbox --filename face_yolov8m.pt
+
+# Loras
+RUN comfy model download --url https://huggingface.co/tglink/Houtengeki-Style-IL/resolve/main/Houtengeki_Style.safetensors --relative-path models/loras --filename Houtengeki_Style.safetensors
 
 # copy all input data (like images or videos) into comfyui (uncomment and adjust if needed)
 # COPY input/ /comfyui/input/
