@@ -1,0 +1,2147 @@
+{
+  "1": {
+    "inputs": {
+      "samples": [
+        "11",
+        0
+      ],
+      "vae": [
+        "25",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "2": {
+    "inputs": {
+      "auto_detect": "enable",
+      "compression_level": 100,
+      "image": [
+        "19:338",
+        0
+      ]
+    },
+    "class_type": "JPEG artifacts removal FBCNN",
+    "_meta": {
+      "title": "Compression Removal"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": [
+        "83",
+        0
+      ],
+      "token_normalization": "none",
+      "weight_interpretation": "A1111",
+      "clip": [
+        "37",
+        1
+      ]
+    },
+    "class_type": "BNK_CLIPTextEncodeAdvanced",
+    "_meta": {
+      "title": "Negative CLIP Text Encode"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": [
+        "542",
+        0
+      ],
+      "token_normalization": "none",
+      "weight_interpretation": "A1111",
+      "clip": [
+        "37",
+        1
+      ]
+    },
+    "class_type": "BNK_CLIPTextEncodeAdvanced",
+    "_meta": {
+      "title": "Positive CLIP Text Encode"
+    }
+  },
+  "11": {
+    "inputs": {
+      "add_noise": "enable",
+      "noise_seed": [
+        "23",
+        0
+      ],
+      "steps": [
+        "53:17",
+        0
+      ],
+      "cfg": [
+        "53:9",
+        0
+      ],
+      "sampler_name": [
+        "541",
+        0
+      ],
+      "scheduler": [
+        "53:550",
+        0
+      ],
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model": [
+        "37",
+        0
+      ],
+      "positive": [
+        "7",
+        0
+      ],
+      "negative": [
+        "6",
+        0
+      ],
+      "latent_image": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "KSamplerAdvanced",
+    "_meta": {
+      "title": "KSampler (Advanced)"
+    }
+  },
+  "14": {
+    "inputs": {
+      "stop_at_clip_layer": -2,
+      "clip": [
+        "37",
+        1
+      ]
+    },
+    "class_type": "CLIPSetLastLayer",
+    "_meta": {
+      "title": "CLIP"
+    }
+  },
+  "21": {
+    "inputs": {
+      "image": "$21-0",
+      "block": false,
+      "restore_mask": "never",
+      "images": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "PreviewBridge",
+    "_meta": {
+      "title": "[O] Preview Bridge (Image)"
+    }
+  },
+  "23": {
+    "inputs": {
+      "seed": -1
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "Seed (rgthree)"
+    }
+  },
+  "24": {
+    "inputs": {
+      "ckpt_name": "waiIllustriousSDXL_v160.safetensors"
+    },
+    "class_type": "Checkpoint Loader with Name (Image Saver)",
+    "_meta": {
+      "title": "[I] Model - CHECKPOINT"
+    }
+  },
+  "25": {
+    "inputs": {
+      "vae_name": "sdxl_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "VAE"
+    }
+  },
+  "33": {
+    "inputs": {
+      "width": [
+        "47:543",
+        0
+      ],
+      "height": [
+        "47:544",
+        0
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "37": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "lora_1": {
+        "on": true,
+        "lora": "Houtengeki_Style.safetensors",
+        "strength": 1
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "24",
+        0
+      ],
+      "clip": [
+        "24",
+        1
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "[I] Model - Power Lora Loader"
+    }
+  },
+  "38": {
+    "inputs": {
+      "seed": -1
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "Seed (rgthree)"
+    }
+  },
+  "72": {
+    "inputs": {
+      "template": "masterpiece, best quality, amazing quality,\nh0u73ng3k1,\n(detailed background:1.5), outdoors, field of sunflowers,\ncountryside, (summer:1.5), sun rays, sun, (strong shadows:1.2), (wind:2),\nfull body, dynamic pose, dynamic angle,\n\n{variable_5}, {variable_6},\n\n{variable_4}\n\n(loose clothes:1.4), sweaty,\n\n{variable_1}\n\n{variable_3}",
+      "variable_1": [
+        "155:181:178",
+        0
+      ],
+      "variable_2": [
+        "155:165",
+        0
+      ],
+      "variable_3": [
+        "498:495",
+        0
+      ],
+      "variable_4": [
+        "103:47",
+        0
+      ],
+      "variable_5": [
+        "103:54",
+        0
+      ],
+      "variable_6": [
+        "103:57",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "[I] Prompt - POSITIVE"
+    }
+  },
+  "79": {
+    "inputs": {
+      "images": [
+        "158",
+        1
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "81": {
+    "inputs": {
+      "preview": "",
+      "previewMode": null,
+      "source": [
+        "72",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "82": {
+    "inputs": {
+      "preview": "",
+      "previewMode": null,
+      "source": [
+        "83",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "83": {
+    "inputs": {
+      "template": "{variable_1}\nwhite dress,\nsee-through,\n\nbad face, bad eyes, bad hands, bad fingers, extra digits, extra fingers,\n\nwatermark, logo, artist signature, censored, \n \nscared, angry, in pain, spit, vomit,\ndisembodied penis, floating penis, defloration,\n\nlow quality bad quality, worst quality,",
+      "variable_1": [
+        "155:190",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "[I] Prompt - NEGATIVE"
+    }
+  },
+  "110": {
+    "inputs": {
+      "string_a": "txt2img",
+      "string_b": [
+        "155:149",
+        0
+      ],
+      "delimiter": "/"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Concatenate"
+    }
+  },
+  "158": {
+    "inputs": {
+      "model_name": "4x_APISR_GRL_GAN_generator.pth",
+      "rescale_after_model": true,
+      "rescale_method": "nearest-exact",
+      "rescale": "to Width/Height",
+      "percent": 50,
+      "width": [
+        "12:539",
+        0
+      ],
+      "height": [
+        "12:540",
+        0
+      ],
+      "longer_side": 1024,
+      "crop": "disabled",
+      "image_output": "Hide",
+      "link_id": 0,
+      "save_prefix": "ComfyUI",
+      "image": [
+        "1",
+        0
+      ],
+      "vae": [
+        "25",
+        0
+      ]
+    },
+    "class_type": "easy hiresFix",
+    "_meta": {
+      "title": "HiresFix"
+    }
+  },
+  "534": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "24",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "Power Lora Loader (rgthree)"
+    }
+  },
+  "535": {
+    "inputs": {
+      "model_a": [
+        "534",
+        0
+      ],
+      "model_b": [
+        "37",
+        0
+      ],
+      "boolean": [
+        "536",
+        0
+      ]
+    },
+    "class_type": "Model Input Switch",
+    "_meta": {
+      "title": "Model Input Switch"
+    }
+  },
+  "536": {
+    "inputs": {
+      "value": false
+    },
+    "class_type": "PrimitiveBoolean",
+    "_meta": {
+      "title": "Use Different Detailer Loras?"
+    }
+  },
+  "541": {
+    "inputs": {
+      "sampler_name": [
+        "53:551",
+        0
+      ]
+    },
+    "class_type": "Sampler Selector (Image Saver)",
+    "_meta": {
+      "title": "Sampler Selector (Image Saver)"
+    }
+  },
+  "542": {
+    "inputs": {
+      "string": [
+        "72",
+        0
+      ]
+    },
+    "class_type": "String Literal (Image Saver)",
+    "_meta": {
+      "title": "String Literal (Image Saver)"
+    }
+  },
+  "559": {
+    "inputs": {
+      "Xi": 1024,
+      "Xf": 1024,
+      "Yi": 1024,
+      "Yf": 1024,
+      "isfloatX": 0,
+      "isfloatY": 0
+    },
+    "class_type": "mxSlider2D",
+    "_meta": {
+      "title": "[I] Image - Width x Height"
+    }
+  },
+  "560": {
+    "inputs": {
+      "filename_prefix": "%time_%basemodelname_%seed",
+      "images": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "498:483": {
+    "inputs": {
+      "string_a": [
+        "498:476",
+        0
+      ],
+      "string_b": "cos_face",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_cos_face"
+    }
+  },
+  "498:484": {
+    "inputs": {
+      "string_a": [
+        "498:476",
+        0
+      ],
+      "string_b": "cos_head",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_cos_head"
+    }
+  },
+  "498:485": {
+    "inputs": {
+      "string_a": [
+        "498:476",
+        0
+      ],
+      "string_b": "cos_top",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_cos_top"
+    }
+  },
+  "498:486": {
+    "inputs": {
+      "string_a": [
+        "498:476",
+        0
+      ],
+      "string_b": "cos_bottom",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_cos_bottom"
+    }
+  },
+  "498:487": {
+    "inputs": {
+      "string_a": [
+        "498:476",
+        0
+      ],
+      "string_b": "cos_shoes",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_cos_shoes"
+    }
+  },
+  "498:488": {
+    "inputs": {
+      "string_a": [
+        "498:476",
+        0
+      ],
+      "string_b": "cos_neg",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_cos_neg"
+    }
+  },
+  "498:496": {
+    "inputs": {
+      "string_a": [
+        "498:476",
+        0
+      ],
+      "string_b": "_cos_pos",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Concatenate"
+    }
+  },
+  "498:497": {
+    "inputs": {
+      "template": "{variable_1},\n{variable_2},\n{variable_3},\n{variable_4},\n{variable_5}",
+      "variable_1": [
+        "498:489",
+        0
+      ],
+      "variable_2": [
+        "498:490",
+        0
+      ],
+      "variable_3": [
+        "498:491",
+        0
+      ],
+      "variable_4": [
+        "498:492",
+        0
+      ],
+      "variable_5": [
+        "498:493",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "Text Prompt Builder"
+    }
+  },
+  "498:495": {
+    "inputs": {
+      "var_name": [
+        "498:496",
+        0
+      ],
+      "text": [
+        "498:497",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_pos"
+    }
+  },
+  "498:489": {
+    "inputs": {
+      "var_name": [
+        "498:483",
+        0
+      ],
+      "text": [
+        "498:477",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_face"
+    }
+  },
+  "498:490": {
+    "inputs": {
+      "var_name": [
+        "498:484",
+        0
+      ],
+      "text": [
+        "498:478",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_head"
+    }
+  },
+  "498:491": {
+    "inputs": {
+      "var_name": [
+        "498:485",
+        0
+      ],
+      "text": [
+        "498:479",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_top"
+    }
+  },
+  "498:492": {
+    "inputs": {
+      "var_name": [
+        "498:486",
+        0
+      ],
+      "text": [
+        "498:480",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_bottom"
+    }
+  },
+  "498:493": {
+    "inputs": {
+      "var_name": [
+        "498:487",
+        0
+      ],
+      "text": [
+        "498:481",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_shoes"
+    }
+  },
+  "498:494": {
+    "inputs": {
+      "var_name": [
+        "498:488",
+        0
+      ],
+      "text": [
+        "498:482",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_neg"
+    }
+  },
+  "498:477": {
+    "inputs": {
+      "text": ""
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "[I] Costume - Face"
+    }
+  },
+  "498:476": {
+    "inputs": {
+      "value": "Dress"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "[I] Costume - Name"
+    }
+  },
+  "498:478": {
+    "inputs": {
+      "text": "very large white sun hat, orange ribbon,"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "[I] Costume - Head"
+    }
+  },
+  "498:479": {
+    "inputs": {
+      "text": "(beige:1.5) summer dress, with lace trim and with white straps. scoop neck, halter dress style straps, puffy detached short sleeves.\nleather corset.\nsingle leather shoulder bag hanging off her left shoulder, gold necklace, sun symbol necklace, glowing necklace."
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "[I] Costume - Top"
+    }
+  },
+  "498:480": {
+    "inputs": {
+      "text": "long (beige:1.5) summer dress with sunflower print, (side slit:1.1),"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "[I] Costume - Bottom"
+    }
+  },
+  "498:481": {
+    "inputs": {
+      "text": "knee-high sandals, (white leather sandals:1.2), (gladiator sandals:0.8),"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "[I] Costume - Shoes"
+    }
+  },
+  "498:482": {
+    "inputs": {
+      "text": ""
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "[I] Costume - Negative"
+    }
+  },
+  "155:189": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "neg",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_neg"
+    }
+  },
+  "155:188": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "body_details",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_body_details"
+    }
+  },
+  "155:167": {
+    "inputs": {
+      "var_name": [
+        "155:188",
+        0
+      ],
+      "text": [
+        "155:148",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "body details"
+    }
+  },
+  "155:190": {
+    "inputs": {
+      "var_name": [
+        "155:189",
+        0
+      ],
+      "text": [
+        "155:154",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "negative"
+    }
+  },
+  "155:187": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "body",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_body"
+    }
+  },
+  "155:166": {
+    "inputs": {
+      "var_name": [
+        "155:187",
+        0
+      ],
+      "text": [
+        "155:147",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "body"
+    }
+  },
+  "155:186": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "face",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_face"
+    }
+  },
+  "155:185": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "hair",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_hair"
+    }
+  },
+  "155:184": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "eyes",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_eyes"
+    }
+  },
+  "155:163": {
+    "inputs": {
+      "var_name": [
+        "155:184",
+        0
+      ],
+      "text": [
+        "155:153",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "eyes"
+    }
+  },
+  "155:176:173": {
+    "inputs": {
+      "var_name": [
+        "155:176:174",
+        0
+      ],
+      "text": [
+        "155:176:175",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "Text Prompt Node"
+    }
+  },
+  "155:176:174": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "_head",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_head"
+    }
+  },
+  "155:176:175": {
+    "inputs": {
+      "template": "{variable_1},\n{variable_2},\n{variable_3}",
+      "variable_1": [
+        "155:163",
+        0
+      ],
+      "variable_2": [
+        "155:164",
+        0
+      ],
+      "variable_3": [
+        "155:165",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "head prompt"
+    }
+  },
+  "155:192": {
+    "inputs": {
+      "string_a": [
+        "155:153",
+        0
+      ],
+      "string_b": [
+        "155:146",
+        0
+      ],
+      "delimiter": ", "
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "face with eyes"
+    }
+  },
+  "155:177:173": {
+    "inputs": {
+      "var_name": [
+        "155:177:174",
+        0
+      ],
+      "text": [
+        "155:177:176",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "Text Prompt Node"
+    }
+  },
+  "155:177:174": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "_body_detailed",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_body_detailed"
+    }
+  },
+  "155:177:176": {
+    "inputs": {
+      "template": "{variable_1},\n{variable_2}",
+      "variable_1": [
+        "155:166",
+        0
+      ],
+      "variable_2": [
+        "155:167",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "body prompt"
+    }
+  },
+  "155:164": {
+    "inputs": {
+      "var_name": [
+        "155:185",
+        0
+      ],
+      "text": [
+        "155:151",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "hair"
+    }
+  },
+  "155:165": {
+    "inputs": {
+      "var_name": [
+        "155:186",
+        0
+      ],
+      "text": [
+        "155:192",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "face"
+    }
+  },
+  "155:181:178": {
+    "inputs": {
+      "var_name": [
+        "155:181:180",
+        0
+      ],
+      "text": [
+        "155:181:179",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "Text Prompt Node"
+    }
+  },
+  "155:181:180": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "_pos",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_pos"
+    }
+  },
+  "155:181:179": {
+    "inputs": {
+      "template": "{variable_1},\n{variable_2},\n{variable_3},\n{variable_4},\n{variable_5}",
+      "variable_1": [
+        "155:162",
+        0
+      ],
+      "variable_2": [
+        "155:164",
+        0
+      ],
+      "variable_3": [
+        "155:165",
+        0
+      ],
+      "variable_4": [
+        "155:166",
+        0
+      ],
+      "variable_5": [
+        "155:167",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "positive prompt"
+    }
+  },
+  "155:183": {
+    "inputs": {
+      "string_a": [
+        "155:149",
+        0
+      ],
+      "string_b": "sex",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_sex"
+    }
+  },
+  "155:558": {
+    "inputs": {
+      "value": "1girl"
+    },
+    "class_type": "easy string",
+    "_meta": {
+      "title": "[I] Character - Sex"
+    }
+  },
+  "155:149": {
+    "inputs": {
+      "value": "Sola"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "[I] Character - Name"
+    }
+  },
+  "155:153": {
+    "inputs": {
+      "value": "(glowing eyes:1.4), sun eyes, no pupils, yellow eyes"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[I] Character - Eyes"
+    }
+  },
+  "155:151": {
+    "inputs": {
+      "value": "(bangs pinned back:1.3), long hair, (messy hair:1.3), orange hair"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[I] Character - Hair"
+    }
+  },
+  "155:146": {
+    "inputs": {
+      "value": "freckles, tareme"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[I] Character - Face"
+    }
+  },
+  "155:147": {
+    "inputs": {
+      "value": "wide hips, cleavage, large breasts, (sagging breasts:0.8)"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[I] Character - Body"
+    }
+  },
+  "155:148": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[I] Character - Body Details"
+    }
+  },
+  "155:154": {
+    "inputs": {
+      "value": "topknot, pupils, black pupils"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[I] Character - Negative"
+    }
+  },
+  "155:162": {
+    "inputs": {
+      "var_name": [
+        "155:183",
+        0
+      ],
+      "text": [
+        "155:558",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "sex"
+    }
+  },
+  "53:17": {
+    "inputs": {
+      "int": 30
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "[I] Config - STEPS"
+    }
+  },
+  "53:9": {
+    "inputs": {
+      "cfg": 6
+    },
+    "class_type": "Cfg Literal (Image Saver)",
+    "_meta": {
+      "title": "[I] Config - CFG"
+    }
+  },
+  "53:550": {
+    "inputs": {
+      "scheduler": "karras"
+    },
+    "class_type": "Scheduler Selector (Image Saver)",
+    "_meta": {
+      "title": "[I] Config - Scheduler"
+    }
+  },
+  "53:551": {
+    "inputs": {
+      "sampler_name": "euler_ancestral"
+    },
+    "class_type": "Sampler Selector (Image Saver)",
+    "_meta": {
+      "title": "[I] Config - Sampler"
+    }
+  },
+  "53:54": {
+    "inputs": {
+      "float": 0.5
+    },
+    "class_type": "Float Literal (Image Saver)",
+    "_meta": {
+      "title": "[I] Config - Denoise"
+    }
+  },
+  "103:56": {
+    "inputs": {
+      "string_a": [
+        "103:59",
+        0
+      ],
+      "string_b": "legs\n",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_legs"
+    }
+  },
+  "103:52": {
+    "inputs": {
+      "string_a": [
+        "103:59",
+        0
+      ],
+      "string_b": "arms",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_arms"
+    }
+  },
+  "103:59": {
+    "inputs": {
+      "value": [
+        "155:149",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "Name"
+    }
+  },
+  "103:51": {
+    "inputs": {
+      "string_a": [
+        "103:59",
+        0
+      ],
+      "string_b": "face_expression",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_face_expression"
+    }
+  },
+  "103:54": {
+    "inputs": {
+      "var_name": [
+        "103:52",
+        0
+      ],
+      "text": "armpit, holding hat, skirt tug,"
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "[I] Pose - Arms"
+    }
+  },
+  "103:57": {
+    "inputs": {
+      "var_name": [
+        "103:56",
+        0
+      ],
+      "text": ""
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "[I] Pose - Legs"
+    }
+  },
+  "103:47": {
+    "inputs": {
+      "var_name": [
+        "103:51",
+        0
+      ],
+      "text": "blush, beaming wide smile, happy, smiling, looking at viewer, (one eye closed:1.2), open mouth,"
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "[I] Pose - Face Expression"
+    }
+  },
+  "61:526": {
+    "inputs": {
+      "value": [
+        "24",
+        3
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "model_name"
+    }
+  },
+  "61:519": {
+    "inputs": {
+      "value": [
+        "53:550",
+        1
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "scheduler_name"
+    }
+  },
+  "61:525": {
+    "inputs": {
+      "value": [
+        "53:551",
+        1
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "sampler_name"
+    }
+  },
+  "61:554": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Positive"
+    }
+  },
+  "61:553": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "47:543": {
+    "inputs": {
+      "int": [
+        "559",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Width"
+    }
+  },
+  "47:544": {
+    "inputs": {
+      "int": [
+        "559",
+        1
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Height"
+    }
+  },
+  "47:545": {
+    "inputs": {
+      "int": 0
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Modified Width"
+    }
+  },
+  "47:546": {
+    "inputs": {
+      "int": 0
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Modified Height"
+    }
+  },
+  "555:526": {
+    "inputs": {
+      "value": [
+        "61:526",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "model_name"
+    }
+  },
+  "555:519": {
+    "inputs": {
+      "value": [
+        "61:519",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "scheduler_name"
+    }
+  },
+  "555:525": {
+    "inputs": {
+      "value": [
+        "61:525",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "sampler_name"
+    }
+  },
+  "555:554": {
+    "inputs": {
+      "value": [
+        "61:554",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Positive"
+    }
+  },
+  "555:553": {
+    "inputs": {
+      "value": [
+        "61:553",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "547:543": {
+    "inputs": {
+      "int": [
+        "47:543",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Width"
+    }
+  },
+  "547:544": {
+    "inputs": {
+      "int": [
+        "47:544",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Height"
+    }
+  },
+  "547:545": {
+    "inputs": {
+      "int": 0
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Modified Width"
+    }
+  },
+  "547:546": {
+    "inputs": {
+      "int": 0
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Modified Height"
+    }
+  },
+  "556:526": {
+    "inputs": {
+      "value": [
+        "555:526",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "model_name"
+    }
+  },
+  "556:519": {
+    "inputs": {
+      "value": [
+        "555:519",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "scheduler_name"
+    }
+  },
+  "556:525": {
+    "inputs": {
+      "value": [
+        "555:525",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "sampler_name"
+    }
+  },
+  "556:554": {
+    "inputs": {
+      "value": [
+        "555:554",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Positive"
+    }
+  },
+  "556:553": {
+    "inputs": {
+      "value": [
+        "555:553",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "12:539": {
+    "inputs": {
+      "a": [
+        "547:543",
+        0
+      ],
+      "b": [
+        "12:452",
+        0
+      ],
+      "operation": "multiply"
+    },
+    "class_type": "easy mathInt",
+    "_meta": {
+      "title": "Math Int"
+    }
+  },
+  "12:452": {
+    "inputs": {
+      "value": 2
+    },
+    "class_type": "easy int",
+    "_meta": {
+      "title": "Scale"
+    }
+  },
+  "12:540": {
+    "inputs": {
+      "a": [
+        "547:544",
+        0
+      ],
+      "b": [
+        "12:452",
+        0
+      ],
+      "operation": "multiply"
+    },
+    "class_type": "easy mathInt",
+    "_meta": {
+      "title": "Math Int"
+    }
+  },
+  "557:526": {
+    "inputs": {
+      "value": [
+        "556:526",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "model_name"
+    }
+  },
+  "557:519": {
+    "inputs": {
+      "value": [
+        "556:519",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "scheduler_name"
+    }
+  },
+  "557:525": {
+    "inputs": {
+      "value": [
+        "556:525",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "sampler_name"
+    }
+  },
+  "557:554": {
+    "inputs": {
+      "value": [
+        "556:554",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Positive"
+    }
+  },
+  "557:553": {
+    "inputs": {
+      "value": [
+        "556:553",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "548:543": {
+    "inputs": {
+      "int": [
+        "547:543",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Width"
+    }
+  },
+  "548:544": {
+    "inputs": {
+      "int": [
+        "547:544",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Height"
+    }
+  },
+  "548:545": {
+    "inputs": {
+      "int": [
+        "12:539",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Modified Width"
+    }
+  },
+  "548:546": {
+    "inputs": {
+      "int": [
+        "12:540",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Modified Height"
+    }
+  },
+  "549:543": {
+    "inputs": {
+      "int": [
+        "548:543",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Width"
+    }
+  },
+  "549:544": {
+    "inputs": {
+      "int": [
+        "548:544",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Height"
+    }
+  },
+  "549:545": {
+    "inputs": {
+      "int": [
+        "548:545",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Modified Width"
+    }
+  },
+  "549:546": {
+    "inputs": {
+      "int": [
+        "548:546",
+        0
+      ]
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "Modified Height"
+    }
+  },
+  "19:324": {
+    "inputs": {
+      "model_name": "bbox/face_yolov8m.pt"
+    },
+    "class_type": "UltralyticsDetectorProvider",
+    "_meta": {
+      "title": "UltralyticsDetectorProvider"
+    }
+  },
+  "19:323": {
+    "inputs": {
+      "model_name": "sam_vit_b_01ec64.pth",
+      "device_mode": "AUTO"
+    },
+    "class_type": "SAMLoader",
+    "_meta": {
+      "title": "SAMLoader (Impact)"
+    }
+  },
+  "19:450": {
+    "inputs": {
+      "preview": "",
+      "previewMode": null,
+      "source": [
+        "19:449",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "19:451": {
+    "inputs": {
+      "preview": "",
+      "previewMode": null,
+      "source": [
+        "19:448",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "19:449": {
+    "inputs": {
+      "template": "{variable_2}, bangs pinned back. looking at viewer,\n\n{variable_3},\n\nhimura kiseki",
+      "variable_1": [
+        "155:181:178",
+        0
+      ],
+      "variable_2": [
+        "155:165",
+        0
+      ],
+      "variable_3": [
+        "103:47",
+        0
+      ],
+      "variable_4": [
+        "498:495",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "Text Prompt Builder"
+    }
+  },
+  "19:448": {
+    "inputs": {
+      "template": "{variable_1},\n\n{variable_3},\n\n{variable_4},\n\nhimura kiseki",
+      "variable_1": [
+        "155:181:178",
+        0
+      ],
+      "variable_2": [
+        "155:165",
+        0
+      ],
+      "variable_3": [
+        "103:47",
+        0
+      ],
+      "variable_4": [
+        "498:495",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "person_detailer"
+    }
+  },
+  "19:446": {
+    "inputs": {
+      "model_name": "segm/person_yolov8m-seg.pt"
+    },
+    "class_type": "UltralyticsDetectorProvider",
+    "_meta": {
+      "title": "UltralyticsDetectorProvider"
+    }
+  },
+  "19:531": {
+    "inputs": {
+      "images": [
+        "19:445",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "19:532": {
+    "inputs": {
+      "images": [
+        "19:325",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "19:338": {
+    "inputs": {
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": [
+        "38",
+        0
+      ],
+      "steps": 25,
+      "cfg": 2.5,
+      "sampler_name": [
+        "53:551",
+        0
+      ],
+      "scheduler": "simple",
+      "denoise": 0.5,
+      "feather": 5,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "refiner_ratio": 0.2,
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "tiled_encode": false,
+      "tiled_decode": false,
+      "image": [
+        "19:325",
+        0
+      ],
+      "detailer_pipe": [
+        "19:325",
+        4
+      ]
+    },
+    "class_type": "FaceDetailerPipe",
+    "_meta": {
+      "title": "FaceDetailer (pipe)"
+    }
+  },
+  "19:445": {
+    "inputs": {
+      "guide_size": 1024,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": [
+        "38",
+        0
+      ],
+      "steps": 20,
+      "cfg": 2.5,
+      "sampler_name": [
+        "53:551",
+        0
+      ],
+      "scheduler": "karras",
+      "denoise": 0.4,
+      "feather": 5,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.20000000000000004,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": [
+        "19:448",
+        0
+      ],
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "tiled_encode": false,
+      "tiled_decode": false,
+      "image": [
+        "158",
+        1
+      ],
+      "model": [
+        "535",
+        0
+      ],
+      "clip": [
+        "37",
+        1
+      ],
+      "vae": [
+        "25",
+        0
+      ],
+      "positive": [
+        "7",
+        0
+      ],
+      "negative": [
+        "6",
+        0
+      ],
+      "bbox_detector": [
+        "19:446",
+        0
+      ],
+      "sam_model_opt": [
+        "19:323",
+        0
+      ],
+      "segm_detector_opt": [
+        "19:446",
+        1
+      ]
+    },
+    "class_type": "FaceDetailer",
+    "_meta": {
+      "title": "[I] Detailer - PersonDetailer"
+    }
+  },
+  "19:325": {
+    "inputs": {
+      "guide_size": 1024,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": [
+        "38",
+        0
+      ],
+      "steps": 25,
+      "cfg": 5,
+      "sampler_name": [
+        "53:551",
+        0
+      ],
+      "scheduler": "karras",
+      "denoise": 0.5,
+      "feather": 5,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.20000000000000004,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": [
+        "19:449",
+        0
+      ],
+      "cycle": 1,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "tiled_encode": false,
+      "tiled_decode": false,
+      "image": [
+        "19:445",
+        0
+      ],
+      "model": [
+        "535",
+        0
+      ],
+      "clip": [
+        "37",
+        1
+      ],
+      "vae": [
+        "25",
+        0
+      ],
+      "positive": [
+        "7",
+        0
+      ],
+      "negative": [
+        "6",
+        0
+      ],
+      "bbox_detector": [
+        "19:324",
+        0
+      ],
+      "sam_model_opt": [
+        "19:323",
+        0
+      ],
+      "segm_detector_opt": [
+        "19:324",
+        1
+      ]
+    },
+    "class_type": "FaceDetailer",
+    "_meta": {
+      "title": "[I] Detailer - FaceDetailer"
+    }
+  }
+}
