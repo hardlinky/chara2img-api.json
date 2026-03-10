@@ -2103,7 +2103,7 @@
   },
   "703:748": {
     "inputs": {
-      "value": "{Character_Body}, [Character_BodyDetails},\n{Character_Hair},\n\n{Costume_Head}, {Costume_Top}, {Costume_Bottom}, {Costume_Feet},\n\nh0u73ng3k1"
+      "value": "{Character_Body}, {Character_BodyDetails},\n{Character_Hair},\n\n{Costume_Head}, {Costume_Top}, {Costume_Bottom}, {Costume_Feet},\n\nh0u73ng3k1"
     },
     "class_type": "PrimitiveStringMultiline",
     "_meta": {
