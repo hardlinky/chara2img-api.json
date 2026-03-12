@@ -189,6 +189,21 @@
         "lora": "Houtengeki_Style.safetensors",
         "strength": 1
       },
+      "lora_2": {
+        "on": false,
+        "lora": "Bhive_Style.safetensors",
+        "strength": 1
+      },
+      "lora_3": {
+        "on": false,
+        "lora": "Tusyn_style_-_Illustrious.safetensors",
+        "strength": 1
+      },
+      "lora_4": {
+        "on": false,
+        "lora": "na_tarapisu153rapisu_Style.safetensors",
+        "strength": 1
+      },
       "➕ Add Lora": "",
       "model": [
         "24",
@@ -283,6 +298,21 @@
         "lora": "Houtengeki_Style.safetensors",
         "strength": 1
       },
+      "lora_2": {
+        "on": false,
+        "lora": "Bhive_Style.safetensors",
+        "strength": 1
+      },
+      "lora_3": {
+        "on": false,
+        "lora": "Tusyn_style_-_Illustrious.safetensors",
+        "strength": 1
+      },
+      "lora_4": {
+        "on": false,
+        "lora": "na_tarapisu153rapisu_Style.safetensors",
+        "strength": 1
+      },
       "➕ Add Lora": "",
       "model": [
         "24",
@@ -291,7 +321,7 @@
     },
     "class_type": "Power Lora Loader (rgthree)",
     "_meta": {
-      "title": "[Input] Detailer.Loras"
+      "title": "[Input2] Detailer.Loras"
     }
   },
   "535": {
@@ -320,7 +350,7 @@
     },
     "class_type": "PrimitiveBoolean",
     "_meta": {
-      "title": "[Input] Detailer.UseLoras"
+      "title": "[Input1] Detailer.Use Different Detailer Loras?"
     }
   },
   "541": {
@@ -374,329 +404,6 @@
       "title": "Seed (rgthree)"
     }
   },
-  "611:604": {
-    "inputs": {
-      "text": ""
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Costume.Face"
-    }
-  },
-  "611:606": {
-    "inputs": {
-      "text": "very large white sun hat, orange ribbon"
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Costume.Head"
-    }
-  },
-  "611:607": {
-    "inputs": {
-      "text": "(beige:1.5) summer dress, with lace trim and with white straps.\nhalter dress style straps, puffy detached short sleeves.\nleather corset,\nsingle leather shoulder bag hanging off her left shoulder, gold necklace, (sun symbol:1.5) necklace, (glowing necklace:1.3)"
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Costume.Top"
-    }
-  },
-  "611:608": {
-    "inputs": {
-      "text": "long (beige:1.5) summer dress with sunflower print, (side slit:1.3)"
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Costume.Bottom"
-    }
-  },
-  "611:610": {
-    "inputs": {
-      "text": "white dress"
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Costume.Negative"
-    }
-  },
-  "611:609": {
-    "inputs": {
-      "text": "knee-high sandals, (white leather sandals:1.2), (gladiator sandals:0.8)"
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Costume.Feet"
-    }
-  },
-  "611:737": {
-    "inputs": {
-      "template": [
-        "611:736",
-        0
-      ],
-      "variable_1": [
-        "611:598",
-        0
-      ],
-      "variable_2": [
-        "611:599",
-        0
-      ],
-      "variable_3": [
-        "611:600",
-        0
-      ],
-      "variable_4": [
-        "611:601",
-        0
-      ],
-      "variable_5": [
-        "611:602",
-        0
-      ],
-      "variable_6": [
-        "611:603",
-        0
-      ]
-    },
-    "class_type": "DynamicTextPromptBuilder",
-    "_meta": {
-      "title": "[Debug] Character.Vars"
-    }
-  },
-  "611:598": {
-    "inputs": {
-      "var_name": [
-        "611:589",
-        0
-      ],
-      "text": [
-        "611:604",
-        0
-      ]
-    },
-    "class_type": "TextPromptNode",
-    "_meta": {
-      "title": "cos_face"
-    }
-  },
-  "611:599": {
-    "inputs": {
-      "var_name": [
-        "611:590",
-        0
-      ],
-      "text": [
-        "611:606",
-        0
-      ]
-    },
-    "class_type": "TextPromptNode",
-    "_meta": {
-      "title": "cos_head"
-    }
-  },
-  "611:600": {
-    "inputs": {
-      "var_name": [
-        "611:591",
-        0
-      ],
-      "text": [
-        "611:607",
-        0
-      ]
-    },
-    "class_type": "TextPromptNode",
-    "_meta": {
-      "title": "cos_top"
-    }
-  },
-  "611:601": {
-    "inputs": {
-      "var_name": [
-        "611:592",
-        0
-      ],
-      "text": [
-        "611:608",
-        0
-      ]
-    },
-    "class_type": "TextPromptNode",
-    "_meta": {
-      "title": "cos_bottom"
-    }
-  },
-  "611:602": {
-    "inputs": {
-      "var_name": [
-        "611:593",
-        0
-      ],
-      "text": [
-        "611:609",
-        0
-      ]
-    },
-    "class_type": "TextPromptNode",
-    "_meta": {
-      "title": "cos_shoes"
-    }
-  },
-  "611:603": {
-    "inputs": {
-      "var_name": [
-        "611:594",
-        0
-      ],
-      "text": [
-        "611:610",
-        0
-      ]
-    },
-    "class_type": "TextPromptNode",
-    "_meta": {
-      "title": "cos_neg"
-    }
-  },
-  "611:605": {
-    "inputs": {
-      "value": "Dress"
-    },
-    "class_type": "PrimitiveString",
-    "_meta": {
-      "title": "[Input] Costume.Name"
-    }
-  },
-  "611:590": {
-    "inputs": {
-      "string_a": [
-        "611:605",
-        0
-      ],
-      "string_b": "Head",
-      "delimiter": "_"
-    },
-    "class_type": "StringConcatenate",
-    "_meta": {
-      "title": "_Head"
-    }
-  },
-  "611:589": {
-    "inputs": {
-      "string_a": [
-        "611:605",
-        0
-      ],
-      "string_b": "Face",
-      "delimiter": "_"
-    },
-    "class_type": "StringConcatenate",
-    "_meta": {
-      "title": "_Face"
-    }
-  },
-  "611:591": {
-    "inputs": {
-      "string_a": [
-        "611:605",
-        0
-      ],
-      "string_b": "Top",
-      "delimiter": "_"
-    },
-    "class_type": "StringConcatenate",
-    "_meta": {
-      "title": "_Top"
-    }
-  },
-  "611:594": {
-    "inputs": {
-      "string_a": [
-        "611:605",
-        0
-      ],
-      "string_b": "Negative",
-      "delimiter": "_"
-    },
-    "class_type": "StringConcatenate",
-    "_meta": {
-      "title": "_Negative"
-    }
-  },
-  "611:593": {
-    "inputs": {
-      "string_a": [
-        "611:605",
-        0
-      ],
-      "string_b": "Feet",
-      "delimiter": "_"
-    },
-    "class_type": "StringConcatenate",
-    "_meta": {
-      "title": "_Feet"
-    }
-  },
-  "611:592": {
-    "inputs": {
-      "string_a": [
-        "611:605",
-        0
-      ],
-      "string_b": "Bottom",
-      "delimiter": "_"
-    },
-    "class_type": "StringConcatenate",
-    "_meta": {
-      "title": "_Bottom"
-    }
-  },
-  "611:743": {
-    "inputs": {
-      "value": "Face:\n{Costume_Face}\n\nHead:\n{Costume_Head}\n\nTop:\n{Costume_Top}\n\nBottom:\n{Costume_Bottom}\n\nFeet:\n{Costume_Feet}\n\nNegative:\n{Costume_Negative}"
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "String (Multiline)"
-    }
-  },
-  "611:734": {
-    "inputs": {
-      "preview": "Face:\n\n\nHead:\nvery large white sun hat, orange ribbon\n\nTop:\n(beige:1.5) summer dress, with lace trim and with white straps.\nhalter dress style straps, puffy detached short sleeves.\nleather corset,\nsingle leather shoulder bag hanging off her left shoulder, gold necklace, (sun symbol:1.5) necklace, (glowing necklace:1.3)\n\nBottom:\nlong (beige:1.5) summer dress with sunflower print, (side slit:1.3)\n\nFeet:\nknee-high sandals, (white leather sandals:1.2), (gladiator sandals:0.8)\n\nNegative:\nwhite dress",
-      "previewMode": null,
-      "source": [
-        "611:737",
-        0
-      ]
-    },
-    "class_type": "PreviewAny",
-    "_meta": {
-      "title": "Preview as Text"
-    }
-  },
-  "611:736": {
-    "inputs": {
-      "find1": "Character",
-      "replace1": "",
-      "find2": "Costume",
-      "replace2": [
-        "611:605",
-        0
-      ],
-      "find3": "CharaPose",
-      "replace3": "",
-      "prompt": [
-        "611:743",
-        0
-      ]
-    },
-    "class_type": "easy promptReplace",
-    "_meta": {
-      "title": "PromptReplace"
-    }
-  },
   "622:616": {
     "inputs": {
       "var_name": [
@@ -704,7 +411,7 @@
         0
       ],
       "text": [
-        "622:620",
+        "622:794",
         0
       ]
     },
@@ -720,41 +427,13 @@
         0
       ],
       "text": [
-        "622:621",
+        "622:795",
         0
       ]
     },
     "class_type": "TextPromptNode",
     "_meta": {
       "title": "[I] Pose - Legs"
-    }
-  },
-  "622:739": {
-    "inputs": {
-      "template": [
-        "622:738",
-        0
-      ],
-      "variable_1": [
-        "622:618",
-        0
-      ],
-      "variable_2": [
-        "622:616",
-        0
-      ],
-      "variable_3": [
-        "622:617",
-        0
-      ],
-      "variable_4": [
-        "622:671",
-        0
-      ]
-    },
-    "class_type": "DynamicTextPromptBuilder",
-    "_meta": {
-      "title": "[Debug] CharacterPose.Vars"
     }
   },
   "622:671": {
@@ -764,7 +443,7 @@
         0
       ],
       "text": [
-        "622:673",
+        "622:796",
         0
       ]
     },
@@ -829,7 +508,80 @@
       "title": "CharacterPose_Face"
     }
   },
-  "622:744": {
+  "622:614": {
+    "inputs": {
+      "value": "Pose"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "[Input0] Character Pose.Name"
+    }
+  },
+  "622:793": {
+    "inputs": {
+      "value": "blush, beaming wide smile, happy, smiling, looking at viewer, (one eye closed:1.2), open mouth"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input1] Character Pose.Face"
+    }
+  },
+  "622:794": {
+    "inputs": {
+      "value": "armpit, holding hat, skirt tug"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input2] Character Pose.Arms"
+    }
+  },
+  "622:795": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input3] Character Pose.Legs"
+    }
+  },
+  "622:796": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input4] Character Pose.Negative"
+    }
+  },
+  "622:797:739": {
+    "inputs": {
+      "template": [
+        "622:797:738",
+        0
+      ],
+      "variable_1": [
+        "622:618",
+        0
+      ],
+      "variable_2": [
+        "622:616",
+        0
+      ],
+      "variable_3": [
+        "622:617",
+        0
+      ],
+      "variable_4": [
+        "622:671",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "[Debug] CharacterPose.Vars"
+    }
+  },
+  "622:797:744": {
     "inputs": {
       "value": "Face:\n{CharaPose_Face}\n\nArms:\n{CharaPose_Arms}\n\nLegs:\n{CharaPose_Legs}\n\nNegative:\n{CharaPose_Negative}"
     },
@@ -838,7 +590,7 @@
       "title": "String (Multiline)"
     }
   },
-  "622:738": {
+  "622:797:738": {
     "inputs": {
       "find1": "Character",
       "replace1": "",
@@ -850,72 +602,13 @@
         0
       ],
       "prompt": [
-        "622:744",
+        "622:797:744",
         0
       ]
     },
     "class_type": "easy promptReplace",
     "_meta": {
       "title": "PromptReplace"
-    }
-  },
-  "622:741": {
-    "inputs": {
-      "preview": "Face:\nblush, beaming wide smile, happy, smiling, looking at viewer, (one eye closed:1.2), open mouth\n\nArms:\narmpit, holding hat, skirt tug\n\nLegs:\n\n\nNegative:\n",
-      "previewMode": null,
-      "source": [
-        "622:739",
-        0
-      ]
-    },
-    "class_type": "PreviewAny",
-    "_meta": {
-      "title": "Preview as Text"
-    }
-  },
-  "622:614": {
-    "inputs": {
-      "value": "Pose"
-    },
-    "class_type": "PrimitiveString",
-    "_meta": {
-      "title": "[Input] Character Pose.Name"
-    }
-  },
-  "622:619": {
-    "inputs": {
-      "text": "blush, beaming wide smile, happy, smiling, looking at viewer, (one eye closed:1.2), open mouth"
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Character Pose.Face"
-    }
-  },
-  "622:620": {
-    "inputs": {
-      "text": "armpit, holding hat, skirt tug"
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Character Pose.Arms"
-    }
-  },
-  "622:621": {
-    "inputs": {
-      "text": ""
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Character Pose.Legs"
-    }
-  },
-  "622:673": {
-    "inputs": {
-      "text": ""
-    },
-    "class_type": "Text Multiline",
-    "_meta": {
-      "title": "[Input] Character Pose.Negative"
     }
   },
   "622:618": {
@@ -925,7 +618,7 @@
         0
       ],
       "text": [
-        "622:619",
+        "622:793",
         0
       ]
     },
@@ -934,29 +627,72 @@
       "title": "[I] Pose - Face"
     }
   },
-  "588:584": {
+  "622:741": {
     "inputs": {
-      "value": "wide hips, cleavage, large breasts, (sagging breasts:0.8)"
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "[Input] Character.Body"
-    }
-  },
-  "588:587": {
-    "inputs": {
-      "var_name": [
-        "588:578",
-        0
-      ],
-      "text": [
-        "588:579",
+      "preview": "Face:\nblush, beaming wide smile, happy, smiling, looking at viewer, (one eye closed:1.2), open mouth\n\nArms:\narmpit, holding hat, skirt tug\n\nLegs:\n\n\nNegative:\n",
+      "previewMode": null,
+      "source": [
+        "622:797:739",
         0
       ]
     },
-    "class_type": "TextPromptNode",
+    "class_type": "PreviewAny",
     "_meta": {
-      "title": "sex"
+      "title": "Preview as Text"
+    }
+  },
+  "53:17": {
+    "inputs": {
+      "int": 30
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "[Input] Config.STEPS"
+    }
+  },
+  "53:9": {
+    "inputs": {
+      "cfg": 6
+    },
+    "class_type": "Cfg Literal (Image Saver)",
+    "_meta": {
+      "title": "[Input] Config.CFG"
+    }
+  },
+  "53:551": {
+    "inputs": {
+      "sampler_name": "euler_ancestral"
+    },
+    "class_type": "Sampler Selector (Image Saver)",
+    "_meta": {
+      "title": "[Input] Config.Sampler"
+    }
+  },
+  "53:54": {
+    "inputs": {
+      "float": 0.5
+    },
+    "class_type": "Float Literal (Image Saver)",
+    "_meta": {
+      "title": "[Input] Config.Denoise"
+    }
+  },
+  "53:758": {
+    "inputs": {
+      "int": 1
+    },
+    "class_type": "Int Literal (Image Saver)",
+    "_meta": {
+      "title": "[Input] Config.Batch Size"
+    }
+  },
+  "53:550": {
+    "inputs": {
+      "scheduler": "karras"
+    },
+    "class_type": "Scheduler Selector (Image Saver)",
+    "_meta": {
+      "title": "[Input] Config.Scheduler"
     }
   },
   "588:571": {
@@ -1023,55 +759,6 @@
       "title": "negative"
     }
   },
-  "588:580": {
-    "inputs": {
-      "value": "Sola"
-    },
-    "class_type": "PrimitiveString",
-    "_meta": {
-      "title": "[Input] Character.Name"
-    }
-  },
-  "588:729": {
-    "inputs": {
-      "template": [
-        "588:731",
-        0
-      ],
-      "variable_1": [
-        "588:587",
-        0
-      ],
-      "variable_2": [
-        "588:571",
-        0
-      ],
-      "variable_3": [
-        "588:575",
-        0
-      ],
-      "variable_4": [
-        "588:576",
-        0
-      ],
-      "variable_5": [
-        "588:567",
-        0
-      ],
-      "variable_6": [
-        "588:564",
-        0
-      ],
-      "variable_7": [
-        "588:565",
-        0
-      ]
-    },
-    "class_type": "DynamicTextPromptBuilder",
-    "_meta": {
-      "title": "[Debug] Character.Vars"
-    }
-  },
   "588:575": {
     "inputs": {
       "var_name": [
@@ -1088,15 +775,6 @@
       "title": "hair"
     }
   },
-  "588:583": {
-    "inputs": {
-      "value": "(freckles:1.2), tareme"
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "[Input] Character.Face"
-    }
-  },
   "588:567": {
     "inputs": {
       "var_name": [
@@ -1111,60 +789,6 @@
     "class_type": "TextPromptNode",
     "_meta": {
       "title": "body"
-    }
-  },
-  "588:585": {
-    "inputs": {
-      "value": ""
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "[Input] Character.Body Details"
-    }
-  },
-  "588:586": {
-    "inputs": {
-      "value": "topknot, hairclip, hairpin, hair accessory, skin fang, bangs,\npupils, black pupils"
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "[Input] Character.Negative"
-    }
-  },
-  "588:582": {
-    "inputs": {
-      "value": "(bangs pinned back:1.4), long hair, (messy hair:1.3), orange hair"
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "[Input] Character.Hair"
-    }
-  },
-  "588:581": {
-    "inputs": {
-      "value": "(glowing eyes:1.4), sun eyes, no pupils, yellow eyes,\nbig (kind and gentle:1.2) eyes"
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "[Input] Character.Eyes"
-    }
-  },
-  "588:579": {
-    "inputs": {
-      "value": "1girl"
-    },
-    "class_type": "easy string",
-    "_meta": {
-      "title": "[Input] Character.Sex"
-    }
-  },
-  "588:742": {
-    "inputs": {
-      "value": "Sex:\n{Character_Sex}\n\nEyes:\n{Character_Eyes}\n\nHair:\n{Character_Hair}\n\nFace:\n{Character_Face}\n\nBody:\n{Character_Body}\n\nBody Details:\n{Character_BodyDetails}\n\nNegative:\n{Character_Negative}\n\n"
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "String (Multiline)"
     }
   },
   "588:562": {
@@ -1265,7 +889,158 @@
       "title": "_Face"
     }
   },
-  "588:731": {
+  "588:581": {
+    "inputs": {
+      "value": "(glowing eyes:1.4), sun eyes, no pupils, yellow eyes,\nbig (kind and gentle:1.2) eyes"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input2] Character.Eyes"
+    }
+  },
+  "588:582": {
+    "inputs": {
+      "value": "(bangs pinned back:1.4), long hair, (messy hair:1.3), orange hair"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input3] Character.Hair"
+    }
+  },
+  "588:583": {
+    "inputs": {
+      "value": "(freckles:1.2), tareme"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input4] Character.Face"
+    }
+  },
+  "588:584": {
+    "inputs": {
+      "value": "wide hips, cleavage, large breasts, (sagging breasts:0.8)"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input5] Character.Body"
+    }
+  },
+  "588:585": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input6] Character.Body Details"
+    }
+  },
+  "588:586": {
+    "inputs": {
+      "value": "topknot, hairclip, hairpin, hair accessory, skin fang, bangs,\npupils, black pupils"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input] Character.Negative"
+    }
+  },
+  "588:587": {
+    "inputs": {
+      "var_name": [
+        "588:578",
+        0
+      ],
+      "text": [
+        "588:781",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "sex"
+    }
+  },
+  "588:781": {
+    "inputs": {
+      "value": "1girl"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "[Input1] Character.Sex"
+    }
+  },
+  "588:580": {
+    "inputs": {
+      "value": "Sola"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "[Input0] Character.Name"
+    }
+  },
+  "588:733": {
+    "inputs": {
+      "preview": "Sex:\n1girl\n\nEyes:\n(glowing eyes:1.4), sun eyes, no pupils, yellow eyes,\nbig (kind and gentle:1.2) eyes\n\nHair:\n(bangs pinned back:1.4), long hair, (messy hair:1.3), orange hair\n\nFace:\n(freckles:1.2), tareme\n\nBody:\nwide hips, cleavage, large breasts, (sagging breasts:0.8)\n\nBody Details:\n\n\nNegative:\ntopknot, hairclip, hairpin, hair accessory, skin fang, bangs,\npupils, black pupils\n\n",
+      "previewMode": null,
+      "source": [
+        "588:792:729",
+        0
+      ]
+    },
+    "class_type": "PreviewAny",
+    "_meta": {
+      "title": "Preview as Text"
+    }
+  },
+  "588:792:729": {
+    "inputs": {
+      "template": [
+        "588:792:731",
+        0
+      ],
+      "variable_1": [
+        "588:587",
+        0
+      ],
+      "variable_2": [
+        "588:571",
+        0
+      ],
+      "variable_3": [
+        "588:575",
+        0
+      ],
+      "variable_4": [
+        "588:576",
+        0
+      ],
+      "variable_5": [
+        "588:567",
+        0
+      ],
+      "variable_6": [
+        "588:564",
+        0
+      ],
+      "variable_7": [
+        "588:565",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "[Debug] Character.Vars"
+    }
+  },
+  "588:792:742": {
+    "inputs": {
+      "value": "Sex:\n{Character_Sex}\n\nEyes:\n{Character_Eyes}\n\nHair:\n{Character_Hair}\n\nFace:\n{Character_Face}\n\nBody:\n{Character_Body}\n\nBody Details:\n{Character_BodyDetails}\n\nNegative:\n{Character_Negative}\n\n"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "String (Multiline)"
+    }
+  },
+  "588:792:731": {
     "inputs": {
       "find1": "Character",
       "replace1": [
@@ -1277,7 +1052,7 @@
       "find3": "CharaPose",
       "replace3": "",
       "prompt": [
-        "588:742",
+        "588:792:742",
         0
       ]
     },
@@ -1286,72 +1061,327 @@
       "title": "PromptReplace"
     }
   },
-  "588:733": {
+  "611:782": {
     "inputs": {
-      "preview": "Sex:\n1girl\n\nEyes:\n(glowing eyes:1.4), sun eyes, no pupils, yellow eyes,\nbig (kind and gentle:1.2) eyes\n\nHair:\n(bangs pinned back:1.4), long hair, (messy hair:1.3), orange hair\n\nFace:\n(freckles:1.2), tareme\n\nBody:\nwide hips, cleavage, large breasts, (sagging breasts:0.8)\n\nBody Details:\n\n\nNegative:\ntopknot, hairclip, hairpin, hair accessory, skin fang, bangs,\npupils, black pupils\n\n",
-      "previewMode": null,
+      "value": "white dress"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input] Costume.Negative"
+    }
+  },
+  "611:783": {
+    "inputs": {
+      "value": "knee-high sandals, (white leather sandals:1.2), (gladiator sandals:0.8)"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input5] Costume.Feet"
+    }
+  },
+  "611:786": {
+    "inputs": {
+      "value": "long (beige:1.5) summer dress with sunflower print, (side slit:1.3)"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input4] Costume.Bottom"
+    }
+  },
+  "611:787": {
+    "inputs": {
+      "value": "(beige:1.5) summer dress, with lace trim and with white straps.\nhalter dress style straps, puffy detached short sleeves.\nleather corset,\nsingle leather shoulder bag hanging off her left shoulder, gold necklace, (sun symbol:1.5) necklace, (glowing necklace:1.3)"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input3] Costume.Top"
+    }
+  },
+  "611:788": {
+    "inputs": {
+      "value": "very large sun hat, orange ribbon"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input2] Costume.Head"
+    }
+  },
+  "611:605": {
+    "inputs": {
+      "value": "Dress"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "[Input0] Costume.Name"
+    }
+  },
+  "611:594": {
+    "inputs": {
+      "string_a": [
+        "611:605",
+        0
+      ],
+      "string_b": "Negative",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_Negative"
+    }
+  },
+  "611:593": {
+    "inputs": {
+      "string_a": [
+        "611:605",
+        0
+      ],
+      "string_b": "Feet",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_Feet"
+    }
+  },
+  "611:592": {
+    "inputs": {
+      "string_a": [
+        "611:605",
+        0
+      ],
+      "string_b": "Bottom",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_Bottom"
+    }
+  },
+  "611:591": {
+    "inputs": {
+      "string_a": [
+        "611:605",
+        0
+      ],
+      "string_b": "Top",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_Top"
+    }
+  },
+  "611:590": {
+    "inputs": {
+      "string_a": [
+        "611:605",
+        0
+      ],
+      "string_b": "Head",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_Head"
+    }
+  },
+  "611:589": {
+    "inputs": {
+      "string_a": [
+        "611:605",
+        0
+      ],
+      "string_b": "Face",
+      "delimiter": "_"
+    },
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "_Face"
+    }
+  },
+  "611:598": {
+    "inputs": {
+      "var_name": [
+        "611:589",
+        0
+      ],
+      "text": [
+        "611:790",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_face"
+    }
+  },
+  "611:599": {
+    "inputs": {
+      "var_name": [
+        "611:590",
+        0
+      ],
+      "text": [
+        "611:788",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_head"
+    }
+  },
+  "611:600": {
+    "inputs": {
+      "var_name": [
+        "611:591",
+        0
+      ],
+      "text": [
+        "611:787",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_top"
+    }
+  },
+  "611:601": {
+    "inputs": {
+      "var_name": [
+        "611:592",
+        0
+      ],
+      "text": [
+        "611:786",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_bottom"
+    }
+  },
+  "611:603": {
+    "inputs": {
+      "var_name": [
+        "611:594",
+        0
+      ],
+      "text": [
+        "611:782",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_neg"
+    }
+  },
+  "611:602": {
+    "inputs": {
+      "var_name": [
+        "611:593",
+        0
+      ],
+      "text": [
+        "611:783",
+        0
+      ]
+    },
+    "class_type": "TextPromptNode",
+    "_meta": {
+      "title": "cos_shoes"
+    }
+  },
+  "611:791:736": {
+    "inputs": {
+      "find1": "Character",
+      "replace1": "",
+      "find2": "Costume",
+      "replace2": [
+        "611:605",
+        0
+      ],
+      "find3": "CharaPose",
+      "replace3": "",
+      "prompt": [
+        "611:791:743",
+        0
+      ]
+    },
+    "class_type": "easy promptReplace",
+    "_meta": {
+      "title": "PromptReplace"
+    }
+  },
+  "611:791:737": {
+    "inputs": {
+      "template": [
+        "611:791:736",
+        0
+      ],
+      "variable_1": [
+        "611:598",
+        0
+      ],
+      "variable_2": [
+        "611:599",
+        0
+      ],
+      "variable_3": [
+        "611:600",
+        0
+      ],
+      "variable_4": [
+        "611:601",
+        0
+      ],
+      "variable_5": [
+        "611:602",
+        0
+      ],
+      "variable_6": [
+        "611:603",
+        0
+      ]
+    },
+    "class_type": "DynamicTextPromptBuilder",
+    "_meta": {
+      "title": "[Debug] Character.Vars"
+    }
+  },
+  "611:791:743": {
+    "inputs": {
+      "value": "Face:\n{Costume_Face}\n\nHead:\n{Costume_Head}\n\nTop:\n{Costume_Top}\n\nBottom:\n{Costume_Bottom}\n\nFeet:\n{Costume_Feet}\n\nNegative:\n{Costume_Negative}"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "String (Multiline)"
+    }
+  },
+  "611:790": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input1] Costume.Face"
+    }
+  },
+  "611:734": {
+    "inputs": {
+      "preview": "Face:\n\n\nHead:\nvery large sun hat, orange ribbon\n\nTop:\n(beige:1.5) summer dress, with lace trim and with white straps.\nhalter dress style straps, puffy detached short sleeves.\nleather corset,\nsingle leather shoulder bag hanging off her left shoulder, gold necklace, (sun symbol:1.5) necklace, (glowing necklace:1.3)\n\nBottom:\nlong (beige:1.5) summer dress with sunflower print, (side slit:1.3)\n\nFeet:\nknee-high sandals, (white leather sandals:1.2), (gladiator sandals:0.8)\n\nNegative:\nwhite dress",
+      "previewMode": false,
       "source": [
-        "588:729",
+        "611:791:737",
         0
       ]
     },
     "class_type": "PreviewAny",
     "_meta": {
       "title": "Preview as Text"
-    }
-  },
-  "53:17": {
-    "inputs": {
-      "int": 30
-    },
-    "class_type": "Int Literal (Image Saver)",
-    "_meta": {
-      "title": "[Input] Config.STEPS"
-    }
-  },
-  "53:9": {
-    "inputs": {
-      "cfg": 6
-    },
-    "class_type": "Cfg Literal (Image Saver)",
-    "_meta": {
-      "title": "[Input] Config.CFG"
-    }
-  },
-  "53:550": {
-    "inputs": {
-      "scheduler": "karras"
-    },
-    "class_type": "Scheduler Selector (Image Saver)",
-    "_meta": {
-      "title": "[Input] Config.Scheduler"
-    }
-  },
-  "53:551": {
-    "inputs": {
-      "sampler_name": "euler_ancestral"
-    },
-    "class_type": "Sampler Selector (Image Saver)",
-    "_meta": {
-      "title": "[Input] Config.Sampler"
-    }
-  },
-  "53:54": {
-    "inputs": {
-      "float": 0.5
-    },
-    "class_type": "Float Literal (Image Saver)",
-    "_meta": {
-      "title": "[Input] Config.Denoise"
-    }
-  },
-  "53:758": {
-    "inputs": {
-      "int": 1
-    },
-    "class_type": "Int Literal (Image Saver)",
-    "_meta": {
-      "title": "[Input] Config.Batch Size"
     }
   },
   "47:543": {
@@ -1595,6 +1625,138 @@
       "title": "Math Int"
     }
   },
+  "556:526": {
+    "inputs": {
+      "value": [
+        "555:526",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "model_name"
+    }
+  },
+  "556:519": {
+    "inputs": {
+      "value": [
+        "555:519",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "scheduler_name"
+    }
+  },
+  "556:525": {
+    "inputs": {
+      "value": [
+        "555:525",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "sampler_name"
+    }
+  },
+  "556:554": {
+    "inputs": {
+      "value": [
+        "555:554",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Positive"
+    }
+  },
+  "556:553": {
+    "inputs": {
+      "value": [
+        "555:553",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Negative"
+    }
+  },
+  "686:764": {
+    "inputs": {
+      "value": "masterpiece, best quality, amazing quality,\nh0u73ng3k1,\n(detailed background:1.5), outdoors, field of sunflowers,\ncountryside, (summer:1.5), sun rays, sun, (strong shadows:1.2), (wind:2),\nfull body, dynamic pose, dynamic angle,\n\n{Character_Sex}\n{CharaPose_Arms}, {CharaPose_Legs},\n\n{CharaPose_Face}\n\n(loose clothes:1.4), sweaty,\n\n{Character_Eyes}, {Character_Hair}, {Character_Face},\n\n{Character_Body}, {Character_BodyDetails}\n\n{Costume_Head}, {Costume_Face}, {Costume_Top} {Costume_Bottom}, {Costume_Feet}"
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "[Input0] Prompt.Positive"
+    }
+  },
+  "686:637": {
+    "inputs": {
+      "find1": [
+        "686:798",
+        0
+      ],
+      "replace1": [
+        "588:580",
+        0
+      ],
+      "find2": [
+        "686:799",
+        0
+      ],
+      "replace2": [
+        "611:605",
+        0
+      ],
+      "find3": [
+        "686:800",
+        0
+      ],
+      "replace3": [
+        "622:614",
+        0
+      ],
+      "prompt": [
+        "686:764",
+        0
+      ]
+    },
+    "class_type": "easy promptReplace",
+    "_meta": {
+      "title": "PromptReplace"
+    }
+  },
+  "686:798": {
+    "inputs": {
+      "value": "Character"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "[VarPrefix] Character"
+    }
+  },
+  "686:799": {
+    "inputs": {
+      "value": "Costume"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "[VarPrefix] Costume"
+    }
+  },
+  "686:800": {
+    "inputs": {
+      "value": "CharaPose"
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "[VarPrefix] Character Pose"
+    }
+  },
   "686:684": {
     "inputs": {
       "template": [
@@ -1663,36 +1825,9 @@
       "title": "Variables Input"
     }
   },
-  "686:637": {
-    "inputs": {
-      "find1": "Character",
-      "replace1": [
-        "588:580",
-        0
-      ],
-      "find2": "Costume",
-      "replace2": [
-        "611:605",
-        0
-      ],
-      "find3": "CharaPose",
-      "replace3": [
-        "622:614",
-        0
-      ],
-      "prompt": [
-        "686:764",
-        0
-      ]
-    },
-    "class_type": "easy promptReplace",
-    "_meta": {
-      "title": "PromptReplace"
-    }
-  },
   "686:747": {
     "inputs": {
-      "preview": "masterpiece, best quality, amazing quality,\nh0u73ng3k1,\n(detailed background:1.5), outdoors, field of sunflowers,\ncountryside, (summer:1.5), sun rays, sun, (strong shadows:1.2), (wind:2),\nfull body, dynamic pose, dynamic angle,\n\n1girl\narmpit, holding hat, skirt tug, ,\n\nblush, beaming wide smile, happy, smiling, looking at viewer, (one eye closed:1.2), open mouth\n\n(loose clothes:1.4), sweaty,\n\n(glowing eyes:1.4), sun eyes, no pupils, yellow eyes,\nbig (kind and gentle:1.2) eyes, (bangs pinned back:1.4), long hair, (messy hair:1.3), orange hair, (freckles:1.2), tareme,\n\nwide hips, cleavage, large breasts, (sagging breasts:0.8), \n\n, (beige:1.5) summer dress, with lace trim and with white straps.\nhalter dress style straps, puffy detached short sleeves.\nleather corset,\nsingle leather shoulder bag hanging off her left shoulder, gold necklace, (sun symbol:1.5) necklace, (glowing necklace:1.3) long (beige:1.5) summer dress with sunflower print, (side slit:1.3), knee-high sandals, (white leather sandals:1.2), (gladiator sandals:0.8)",
+      "preview": "masterpiece, best quality, amazing quality,\nh0u73ng3k1,\n(detailed background:1.5), outdoors, field of sunflowers,\ncountryside, (summer:1.5), sun rays, sun, (strong shadows:1.2), (wind:2),\nfull body, dynamic pose, dynamic angle,\n\n1girl\narmpit, holding hat, skirt tug, ,\n\nblush, beaming wide smile, happy, smiling, looking at viewer, (one eye closed:1.2), open mouth\n\n(loose clothes:1.4), sweaty,\n\n(glowing eyes:1.4), sun eyes, no pupils, yellow eyes,\nbig (kind and gentle:1.2) eyes, (bangs pinned back:1.4), long hair, (messy hair:1.3), orange hair, (freckles:1.2), tareme,\n\nwide hips, cleavage, large breasts, (sagging breasts:0.8), \n\nvery large sun hat, orange ribbon, , (beige:1.5) summer dress, with lace trim and with white straps.\nhalter dress style straps, puffy detached short sleeves.\nleather corset,\nsingle leather shoulder bag hanging off her left shoulder, gold necklace, (sun symbol:1.5) necklace, (glowing necklace:1.3) long (beige:1.5) summer dress with sunflower print, (side slit:1.3), knee-high sandals, (white leather sandals:1.2), (gladiator sandals:0.8)",
       "previewMode": null,
       "source": [
         "686:684",
@@ -1702,15 +1837,6 @@
     "class_type": "PreviewAny",
     "_meta": {
       "title": "POSITIVE preview"
-    }
-  },
-  "686:764": {
-    "inputs": {
-      "value": "masterpiece, best quality, amazing quality,\nh0u73ng3k1,\n(detailed background:1.5), outdoors, field of sunflowers,\ncountryside, (summer:1.5), sun rays, sun, (strong shadows:1.2), (wind:2),\nfull body, dynamic pose, dynamic angle,\n\n{Character_Sex}\n{CharaPose_Arms}, {CharaPose_Legs},\n\n{CharaPose_Face}\n\n(loose clothes:1.4), sweaty,\n\n{Character_Eyes}, {Character_Hair}, {Character_Face},\n\n{Character_Body}, {Character_BodyDetails}\n\n{Costume_Face}, {Costume_Top} {Costume_Bottom}, {Costume_Feet}"
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "[Input] Prompt.Positive"
     }
   },
   "689:756": {
@@ -1829,66 +1955,6 @@
       "title": "NEGATIVE"
     }
   },
-  "556:526": {
-    "inputs": {
-      "value": [
-        "555:526",
-        0
-      ]
-    },
-    "class_type": "PrimitiveString",
-    "_meta": {
-      "title": "model_name"
-    }
-  },
-  "556:519": {
-    "inputs": {
-      "value": [
-        "555:519",
-        0
-      ]
-    },
-    "class_type": "PrimitiveString",
-    "_meta": {
-      "title": "scheduler_name"
-    }
-  },
-  "556:525": {
-    "inputs": {
-      "value": [
-        "555:525",
-        0
-      ]
-    },
-    "class_type": "PrimitiveString",
-    "_meta": {
-      "title": "sampler_name"
-    }
-  },
-  "556:554": {
-    "inputs": {
-      "value": [
-        "555:554",
-        0
-      ]
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "Positive"
-    }
-  },
-  "556:553": {
-    "inputs": {
-      "value": [
-        "555:553",
-        0
-      ]
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "Negative"
-    }
-  },
   "548:543": {
     "inputs": {
       "int": [
@@ -1935,6 +2001,66 @@
     "class_type": "Int Literal (Image Saver)",
     "_meta": {
       "title": "Modified Height"
+    }
+  },
+  "557:526": {
+    "inputs": {
+      "value": [
+        "556:526",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "model_name"
+    }
+  },
+  "557:519": {
+    "inputs": {
+      "value": [
+        "556:519",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "scheduler_name"
+    }
+  },
+  "557:525": {
+    "inputs": {
+      "value": [
+        "556:525",
+        0
+      ]
+    },
+    "class_type": "PrimitiveString",
+    "_meta": {
+      "title": "sampler_name"
+    }
+  },
+  "557:554": {
+    "inputs": {
+      "value": [
+        "556:554",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Positive"
+    }
+  },
+  "557:553": {
+    "inputs": {
+      "value": [
+        "556:553",
+        0
+      ]
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "Negative"
     }
   },
   "703:701": {
@@ -2103,7 +2229,7 @@
   },
   "703:748": {
     "inputs": {
-      "value": "{Character_Body}, {Character_BodyDetails},\n{Character_Hair},\n\n{Costume_Head}, {Costume_Top}, {Costume_Bottom}, {Costume_Feet},\n\nh0u73ng3k1"
+      "value": "{Character_Body}, [Character_BodyDetails},\n{Character_Hair},\n\n{Costume_Head}, {Costume_Top}, {Costume_Bottom}, {Costume_Feet},\n\nh0u73ng3k1"
     },
     "class_type": "PrimitiveStringMultiline",
     "_meta": {
@@ -2171,66 +2297,6 @@
     "class_type": "easy promptReplace",
     "_meta": {
       "title": "PromptReplace"
-    }
-  },
-  "557:526": {
-    "inputs": {
-      "value": [
-        "556:526",
-        0
-      ]
-    },
-    "class_type": "PrimitiveString",
-    "_meta": {
-      "title": "model_name"
-    }
-  },
-  "557:519": {
-    "inputs": {
-      "value": [
-        "556:519",
-        0
-      ]
-    },
-    "class_type": "PrimitiveString",
-    "_meta": {
-      "title": "scheduler_name"
-    }
-  },
-  "557:525": {
-    "inputs": {
-      "value": [
-        "556:525",
-        0
-      ]
-    },
-    "class_type": "PrimitiveString",
-    "_meta": {
-      "title": "sampler_name"
-    }
-  },
-  "557:554": {
-    "inputs": {
-      "value": [
-        "556:554",
-        0
-      ]
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "Positive"
-    }
-  },
-  "557:553": {
-    "inputs": {
-      "value": [
-        "556:553",
-        0
-      ]
-    },
-    "class_type": "PrimitiveStringMultiline",
-    "_meta": {
-      "title": "Negative"
     }
   },
   "549:543": {

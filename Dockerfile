@@ -1,6 +1,9 @@
 # clean base image containing only comfyui, comfy-cli and comfyui-manager
 FROM runpod/worker-comfyui:5.5.1-base
 
+ARG CIVITAI_API_KEY
+ENV CIVITAI_API_KEY=${CIVITAI_API_KEY}
+
 # install custom nodes into comfyui (first node with --mode remote to fetch updated cache)
 RUN comfy node install --exit-on-fail ComfyUI_ADV_CLIP_emb --mode remote
 RUN comfy node install --exit-on-fail comfyui-easy-use@1.3.6
@@ -39,7 +42,11 @@ RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/m
 RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/main/face_yolov8m.pt --relative-path models/ultralytics/bbox --filename face_yolov8m.pt
 
 # Loras
+#  huggingface
 RUN comfy model download --url https://huggingface.co/tglink/Houtengeki-Style-IL/resolve/main/Houtengeki_Style.safetensors --relative-path models/loras --filename Houtengeki_Style.safetensors
+
+#  civitai
+RUN wget -q -O /comfyui/models/loras/na_tarapisu153rapisu_Style.safetensors https://civitai.com/api/download/models/1258256?token=${CIVITAI_API_KEY}
 
 # copy all input data (like images or videos) into comfyui (uncomment and adjust if needed)
 # COPY input/ /comfyui/input/
