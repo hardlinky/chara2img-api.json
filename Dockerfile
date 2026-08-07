@@ -19,32 +19,62 @@ RUN cd /comfyui/custom_nodes && git clone https://github.com/kijai/ComfyUI-KJNod
 #RUN comfy node install --exit-on-fail ComfyUI_UltimateSDUpscale
 RUN cd /comfyui/custom_nodes && git clone https://github.com/ssitu/ComfyUI_UltimateSDUpscale && cd /
 
-# create model subdirectories
-RUN mkdir -p /comfyui/models/ultralytics/segm
-RUN mkdir -p /comfyui/models/ultralytics/bbox
+# Create model subdirectories (will be replaced with symlinks at runtime)
+RUN mkdir -p /comfyui/models/checkpoints /comfyui/models/vae /comfyui/models/loras \
+    /comfyui/models/upscale_models /comfyui/models/ultralytics/segm /comfyui/models/ultralytics/bbox
 
-# Download models directly into ComfyUI folders  
-# RUN wget -O /comfyui/models/vae/sdxl_vae.safetensors https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors
-# RUN wget -O /comfyui/models/checkpoints/waiIllustriousSDXL_v160.safetensors https://huggingface.co/Ine007/waiIllustriousSDXL_v160/resolve/main/waiIllustriousSDXL_v160.safetensors
-# RUN wget -O /comfyui/models/upscale_models/4x_APISR_GRL_GAN_generator.pth https://huggingface.co/MIUProject/VNCCS/resolve/main/models/upscale_models/4x_APISR_GRL_GAN_generator.pth
+# Create entrypoint script to handle network volume symlink setup
+RUN cat > /opt/setup-models.sh << 'EOF'
+#!/bin/bash
+set -e
 
-# RUN wget -O /comfyui/models/ultralytics/segm/person_yolov8m-seg.pt https://huggingface.co/Bingsu/adetailer/resolve/main/person_yolov8m-seg.pt
-# RUN wget -O /comfyui/models/ultralytics/bbox/face_yolov8m.pt https://huggingface.co/Bingsu/adetailer/resolve/main/face_yolov8m.pt
+# Expected network volume mount path (configured in RunPod)
+NETWORK_MODELS_ROOT="${NETWORK_MODELS_ROOT:-/workspace/models}"
 
-# download models into comfyui
-RUN comfy model download --url https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors --relative-path models/vae --filename sdxl_vae.safetensors
-RUN comfy model download --url https://huggingface.co/Ine007/waiIllustriousSDXL_v160/resolve/main/waiIllustriousSDXL_v160.safetensors --relative-path models/checkpoints --filename waiIllustriousSDXL_v160.safetensors
-RUN comfy model download --url https://huggingface.co/MIUProject/VNCCS/resolve/main/models/upscale_models/4x_APISR_GRL_GAN_generator.pth --relative-path models/upscale_models --filename 4x_APISR_GRL_GAN_generator.pth
-RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/main/person_yolov8m-seg.pt --relative-path models/ultralytics/segm --filename person_yolov8m-seg.pt
-RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/main/face_yolov8m.pt --relative-path models/ultralytics/bbox --filename face_yolov8m.pt
+echo "Setting up model symlinks from network volume: $NETWORK_MODELS_ROOT"
 
-# Loras
-#  huggingface
-RUN comfy model download --url https://huggingface.co/tglink/Houtengeki-Style-IL/resolve/main/Houtengeki_Style.safetensors --relative-path models/loras --filename Houtengeki_Style.safetensors
+# Function to create symlink safely
+create_symlink_if_needed() {
+  local target=$1
+  local link_name=$2
+  
+  if [ -d "$target" ]; then
+    if [ -e "$link_name" ] && [ ! -L "$link_name" ]; then
+      echo "Warning: $link_name exists but is not a symlink. Skipping."
+      return
+    fi
+    if [ ! -e "$link_name" ]; then
+      echo "Creating symlink: $link_name -> $target"
+      ln -s "$target" "$link_name"
+    else
+      echo "Symlink already exists: $link_name"
+    fi
+  else
+    echo "Network volume path not found: $target (will be populated later)"
+    mkdir -p "$target"
+  fi
+}
 
-#  civitai
-ARG CIVITAI_API_KEY
-RUN wget -q -O /comfyui/models/loras/na_tarapisu153rapisu_Style.safetensors https://civitai.com/api/download/models/1258256?token=${CIVITAI_API_KEY}
+# Create symlinks for each model type
+# If network volume is mounted, use it; otherwise create empty directories
+cd /comfyui/models
 
-# copy all input data (like images or videos) into comfyui (uncomment and adjust if needed)
-# COPY input/ /comfyui/input/
+# Remove local model directories and replace with symlinks
+rm -rf checkpoints vae loras upscale_models
+create_symlink_if_needed "$NETWORK_MODELS_ROOT/checkpoints" "checkpoints"
+create_symlink_if_needed "$NETWORK_MODELS_ROOT/vae" "vae"
+create_symlink_if_needed "$NETWORK_MODELS_ROOT/loras" "loras"
+create_symlink_if_needed "$NETWORK_MODELS_ROOT/upscale_models" "upscale_models"
+
+# Ensure ultralytics subdirectories are accessible from network if present
+if [ -d "$NETWORK_MODELS_ROOT/ultralytics" ]; then
+  rm -rf ultralytics
+  ln -s "$NETWORK_MODELS_ROOT/ultralytics" ultralytics
+fi
+
+echo "Model symlinks setup complete"
+EOF
+chmod +x /opt/setup-models.sh
+
+# Run setup at container start
+# This will be called by the RunPod handler script
