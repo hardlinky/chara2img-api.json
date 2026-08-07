@@ -74,7 +74,4 @@ fi
 
 echo "Model symlinks setup complete"
 EOF
-chmod +x /opt/setup-models.sh
-
-# Run setup at container start
-# This will be called by the RunPod handler script
+RUN chmod +x /opt/setup-models.sh
