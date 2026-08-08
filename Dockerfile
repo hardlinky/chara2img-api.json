@@ -19,57 +19,47 @@ RUN cd /comfyui/custom_nodes && git clone https://github.com/kijai/ComfyUI-KJNod
 #RUN comfy node install --exit-on-fail ComfyUI_UltimateSDUpscale
 RUN cd /comfyui/custom_nodes && git clone https://github.com/ssitu/ComfyUI_UltimateSDUpscale && cd /
 
-# Create model subdirectories
+# Create model subdirectories (replaced with network-volume links at runtime)
 RUN mkdir -p /comfyui/models/checkpoints /comfyui/models/vae /comfyui/models/loras \
     /comfyui/models/upscale_models /comfyui/models/ultralytics/segm /comfyui/models/ultralytics/bbox
 
-# Bake fixed workflow dependencies into the image. Checkpoints and LoRAs stay
-# on the network volume so they can be managed without rebuilding the image.
-RUN comfy model download --url https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors --relative-path models/vae --filename sdxl_vae.safetensors
-RUN comfy model download --url https://huggingface.co/MIUProject/VNCCS/resolve/main/models/upscale_models/4x_APISR_GRL_GAN_generator.pth --relative-path models/upscale_models --filename 4x_APISR_GRL_GAN_generator.pth
-RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/main/person_yolov8m-seg.pt --relative-path models/ultralytics/segm --filename person_yolov8m-seg.pt
-RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/main/face_yolov8m.pt --relative-path models/ultralytics/bbox --filename face_yolov8m.pt
+COPY restore-models.sh /opt/restore-models.sh
+RUN chmod +x /opt/restore-models.sh
 
-# Create entrypoint script to handle network volume symlink setup
+# Restore only missing network models, link them into ComfyUI, then start the worker
 RUN cat > /opt/setup-models.sh << 'EOF'
 #!/bin/bash
 set -e
 
-# Expected network volume mount path (configured in RunPod)
 NETWORK_MODELS_ROOT="${NETWORK_MODELS_ROOT:-/workspace/models}"
+COMFY_MODELS_ROOT="${COMFY_MODELS_ROOT:-/comfyui/models}"
+RESTORE_MODELS_SCRIPT="${RESTORE_MODELS_SCRIPT:-/opt/restore-models.sh}"
+WORKER_START_SCRIPT="${WORKER_START_SCRIPT:-/start.sh}"
 
-echo "Setting up model symlinks from network volume: $NETWORK_MODELS_ROOT"
+echo "Restoring missing models on network volume: $NETWORK_MODELS_ROOT"
+MODELS_ROOT="$NETWORK_MODELS_ROOT" "$RESTORE_MODELS_SCRIPT"
 
-# Function to create symlink safely
-create_symlink_if_needed() {
+link_model_dir() {
   local target=$1
   local link_name=$2
-  
-  if [ -d "$target" ]; then
-    if [ -e "$link_name" ] && [ ! -L "$link_name" ]; then
-      echo "Warning: $link_name exists but is not a symlink. Skipping."
-      return
-    fi
-    if [ ! -e "$link_name" ]; then
-      echo "Creating symlink: $link_name -> $target"
-      ln -s "$target" "$link_name"
-    else
-      echo "Symlink already exists: $link_name"
-    fi
-  else
-    echo "Network volume path not found: $target (will be populated later)"
-    mkdir -p "$target"
-  fi
+
+  mkdir -p "$target"
+  rm -rf "$link_name"
+  ln -s "$target" "$link_name"
+  echo "Linked $link_name -> $target"
 }
 
-# Create symlinks for user-managed model types
-cd /comfyui/models
-
-# Remove checkpoint and LoRA directories and replace them with network links
-rm -rf checkpoints loras
-create_symlink_if_needed "$NETWORK_MODELS_ROOT/checkpoints" "checkpoints"
-create_symlink_if_needed "$NETWORK_MODELS_ROOT/loras" "loras"
+mkdir -p "$COMFY_MODELS_ROOT"
+cd "$COMFY_MODELS_ROOT"
+link_model_dir "$NETWORK_MODELS_ROOT/checkpoints" "checkpoints"
+link_model_dir "$NETWORK_MODELS_ROOT/vae" "vae"
+link_model_dir "$NETWORK_MODELS_ROOT/loras" "loras"
+link_model_dir "$NETWORK_MODELS_ROOT/upscale_models" "upscale_models"
+link_model_dir "$NETWORK_MODELS_ROOT/ultralytics" "ultralytics"
 
 echo "Model symlinks setup complete"
+exec "$WORKER_START_SCRIPT"
 EOF
 RUN chmod +x /opt/setup-models.sh
+
+CMD ["/opt/setup-models.sh"]
