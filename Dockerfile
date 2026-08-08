@@ -19,9 +19,16 @@ RUN cd /comfyui/custom_nodes && git clone https://github.com/kijai/ComfyUI-KJNod
 #RUN comfy node install --exit-on-fail ComfyUI_UltimateSDUpscale
 RUN cd /comfyui/custom_nodes && git clone https://github.com/ssitu/ComfyUI_UltimateSDUpscale && cd /
 
-# Create model subdirectories (will be replaced with symlinks at runtime)
+# Create model subdirectories
 RUN mkdir -p /comfyui/models/checkpoints /comfyui/models/vae /comfyui/models/loras \
     /comfyui/models/upscale_models /comfyui/models/ultralytics/segm /comfyui/models/ultralytics/bbox
+
+# Bake fixed workflow dependencies into the image. Checkpoints and LoRAs stay
+# on the network volume so they can be managed without rebuilding the image.
+RUN comfy model download --url https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors --relative-path models/vae --filename sdxl_vae.safetensors
+RUN comfy model download --url https://huggingface.co/MIUProject/VNCCS/resolve/main/models/upscale_models/4x_APISR_GRL_GAN_generator.pth --relative-path models/upscale_models --filename 4x_APISR_GRL_GAN_generator.pth
+RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/main/person_yolov8m-seg.pt --relative-path models/ultralytics/segm --filename person_yolov8m-seg.pt
+RUN comfy model download --url https://huggingface.co/Bingsu/adetailer/resolve/main/face_yolov8m.pt --relative-path models/ultralytics/bbox --filename face_yolov8m.pt
 
 # Create entrypoint script to handle network volume symlink setup
 RUN cat > /opt/setup-models.sh << 'EOF'
@@ -55,22 +62,13 @@ create_symlink_if_needed() {
   fi
 }
 
-# Create symlinks for each model type
-# If network volume is mounted, use it; otherwise create empty directories
+# Create symlinks for user-managed model types
 cd /comfyui/models
 
-# Remove local model directories and replace with symlinks
-rm -rf checkpoints vae loras upscale_models
+# Remove checkpoint and LoRA directories and replace them with network links
+rm -rf checkpoints loras
 create_symlink_if_needed "$NETWORK_MODELS_ROOT/checkpoints" "checkpoints"
-create_symlink_if_needed "$NETWORK_MODELS_ROOT/vae" "vae"
 create_symlink_if_needed "$NETWORK_MODELS_ROOT/loras" "loras"
-create_symlink_if_needed "$NETWORK_MODELS_ROOT/upscale_models" "upscale_models"
-
-# Ensure ultralytics subdirectories are accessible from network if present
-if [ -d "$NETWORK_MODELS_ROOT/ultralytics" ]; then
-  rm -rf ultralytics
-  ln -s "$NETWORK_MODELS_ROOT/ultralytics" ultralytics
-fi
 
 echo "Model symlinks setup complete"
 EOF
