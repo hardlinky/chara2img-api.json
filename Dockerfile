@@ -32,7 +32,9 @@ RUN cat > /opt/setup-models.sh << 'EOF'
 set -e
 
 NETWORK_MODELS_ROOT="${NETWORK_MODELS_ROOT:-/workspace/models}"
+NETWORK_CUSTOM_NODES_ROOT="${NETWORK_CUSTOM_NODES_ROOT:-/workspace/custom_nodes}"
 COMFY_MODELS_ROOT="${COMFY_MODELS_ROOT:-/comfyui/models}"
+COMFY_CUSTOM_NODES_ROOT="${COMFY_CUSTOM_NODES_ROOT:-/comfyui/custom_nodes}"
 RESTORE_MODELS_SCRIPT="${RESTORE_MODELS_SCRIPT:-/opt/restore-models.sh}"
 WORKER_START_SCRIPT="${WORKER_START_SCRIPT:-/start.sh}"
 
@@ -40,6 +42,16 @@ echo "Restoring missing models on network volume: $NETWORK_MODELS_ROOT"
 MODELS_ROOT="$NETWORK_MODELS_ROOT" "$RESTORE_MODELS_SCRIPT"
 
 link_model_dir() {
+  local target=$1
+  local link_name=$2
+
+  mkdir -p "$target"
+  rm -rf "$link_name"
+  ln -s "$target" "$link_name"
+  echo "Linked $link_name -> $target"
+}
+
+link_custom_node_dir() {
   local target=$1
   local link_name=$2
 
@@ -57,7 +69,11 @@ link_model_dir "$NETWORK_MODELS_ROOT/loras" "loras"
 link_model_dir "$NETWORK_MODELS_ROOT/upscale_models" "upscale_models"
 link_model_dir "$NETWORK_MODELS_ROOT/ultralytics" "ultralytics"
 
-echo "Model symlinks setup complete"
+mkdir -p "$COMFY_CUSTOM_NODES_ROOT"
+cd /comfyui
+link_custom_node_dir "$NETWORK_CUSTOM_NODES_ROOT" "custom_nodes"
+
+echo "Model and custom node symlinks setup complete"
 exec "$WORKER_START_SCRIPT"
 EOF
 RUN chmod +x /opt/setup-models.sh
