@@ -5,10 +5,7 @@ FROM runpod/worker-comfyui:5.5.1-base
 RUN mkdir -p /comfyui/models/checkpoints /comfyui/models/vae /comfyui/models/loras \
     /comfyui/models/upscale_models /comfyui/models/ultralytics/segm /comfyui/models/ultralytics/bbox
 
-COPY restore-models.sh /opt/restore-models.sh
-RUN chmod +x /opt/restore-models.sh
-
-# Restore only missing network models, link them into ComfyUI, then start the worker
+# Link shared network model and custom-node directories into ComfyUI, then start the worker
 RUN cat > /opt/setup-models.sh << 'EOF'
 #!/bin/bash
 set -e
@@ -17,11 +14,7 @@ NETWORK_MODELS_ROOT="${NETWORK_MODELS_ROOT:-/workspace/models}"
 NETWORK_CUSTOM_NODES_ROOT="${NETWORK_CUSTOM_NODES_ROOT:-/workspace/custom_nodes}"
 COMFY_MODELS_ROOT="${COMFY_MODELS_ROOT:-/comfyui/models}"
 COMFY_CUSTOM_NODES_ROOT="${COMFY_CUSTOM_NODES_ROOT:-/comfyui/custom_nodes}"
-RESTORE_MODELS_SCRIPT="${RESTORE_MODELS_SCRIPT:-/opt/restore-models.sh}"
 WORKER_START_SCRIPT="${WORKER_START_SCRIPT:-/start.sh}"
-
-echo "Restoring missing models on network volume: $NETWORK_MODELS_ROOT"
-MODELS_ROOT="$NETWORK_MODELS_ROOT" "$RESTORE_MODELS_SCRIPT"
 
 link_model_dir() {
   local target=$1
