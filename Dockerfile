@@ -1,30 +1,13 @@
 # clean base image containing only comfyui, comfy-cli and comfyui-manager
 FROM runpod/worker-comfyui:5.5.1-base
 
-# install custom nodes into comfyui (first node with --mode remote to fetch updated cache)
-RUN comfy node install --exit-on-fail ComfyUI_ADV_CLIP_emb --mode remote
-RUN comfy node install --exit-on-fail comfyui-easy-use@1.3.6
-RUN comfy node install --exit-on-fail comfyui-fbcnn@1.0.1
-RUN comfy node install --exit-on-fail comfyui-image-saver@1.21.0
-RUN comfy node install --exit-on-fail comfyui-impact-pack@8.28.2
-RUN comfy node install --exit-on-fail comfyui-impact-subpack@1.3.5
-RUN comfy node install --exit-on-fail comfyui-promptbuilder@2.0.1
-RUN comfy node install --exit-on-fail rgthree-comfy@1.0.2512112053
-RUN comfy node install --exit-on-fail was-node-suite-comfyui@1.0.2
-
-#RUN comfy node install --exit-on-fail ComfyUI-mxToolkit
-RUN cd /comfyui/custom_nodes && git clone https://github.com/Smirnov75/ComfyUI-mxToolkit.git && cd /
-#RUN comfy node install --exit-on-fail ComfyUI-KJNodes@1.3.1
-RUN cd /comfyui/custom_nodes && git clone https://github.com/kijai/ComfyUI-KJNodes && cd /
-#RUN comfy node install --exit-on-fail ComfyUI_UltimateSDUpscale
-RUN cd /comfyui/custom_nodes && git clone https://github.com/ssitu/ComfyUI_UltimateSDUpscale && cd /
-
 # Create model subdirectories (replaced with network-volume links at runtime)
 RUN mkdir -p /comfyui/models/checkpoints /comfyui/models/vae /comfyui/models/loras \
     /comfyui/models/upscale_models /comfyui/models/ultralytics/segm /comfyui/models/ultralytics/bbox
 
 COPY restore-models.sh /opt/restore-models.sh
-RUN chmod +x /opt/restore-models.sh
+COPY restore-custom-nodes.sh /opt/restore-custom-nodes.sh
+RUN chmod +x /opt/restore-models.sh /opt/restore-custom-nodes.sh
 
 # Restore only missing network models, link them into ComfyUI, then start the worker
 RUN cat > /opt/setup-models.sh << 'EOF'
@@ -36,10 +19,14 @@ NETWORK_CUSTOM_NODES_ROOT="${NETWORK_CUSTOM_NODES_ROOT:-/workspace/custom_nodes}
 COMFY_MODELS_ROOT="${COMFY_MODELS_ROOT:-/comfyui/models}"
 COMFY_CUSTOM_NODES_ROOT="${COMFY_CUSTOM_NODES_ROOT:-/comfyui/custom_nodes}"
 RESTORE_MODELS_SCRIPT="${RESTORE_MODELS_SCRIPT:-/opt/restore-models.sh}"
+RESTORE_CUSTOM_NODES_SCRIPT="${RESTORE_CUSTOM_NODES_SCRIPT:-/opt/restore-custom-nodes.sh}"
 WORKER_START_SCRIPT="${WORKER_START_SCRIPT:-/start.sh}"
 
 echo "Restoring missing models on network volume: $NETWORK_MODELS_ROOT"
 MODELS_ROOT="$NETWORK_MODELS_ROOT" "$RESTORE_MODELS_SCRIPT"
+
+echo "Restoring custom nodes on network volume: $NETWORK_CUSTOM_NODES_ROOT"
+NETWORK_CUSTOM_NODES_ROOT="$NETWORK_CUSTOM_NODES_ROOT" "$RESTORE_CUSTOM_NODES_SCRIPT"
 
 link_model_dir() {
   local target=$1
