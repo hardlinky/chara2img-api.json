@@ -6,8 +6,7 @@ RUN mkdir -p /comfyui/models/checkpoints /comfyui/models/vae /comfyui/models/lor
     /comfyui/models/upscale_models /comfyui/models/ultralytics/segm /comfyui/models/ultralytics/bbox
 
 COPY restore-models.sh /opt/restore-models.sh
-COPY restore-custom-nodes.sh /opt/restore-custom-nodes.sh
-RUN chmod +x /opt/restore-models.sh /opt/restore-custom-nodes.sh
+RUN chmod +x /opt/restore-models.sh
 
 # Restore only missing network models, link them into ComfyUI, then start the worker
 RUN cat > /opt/setup-models.sh << 'EOF'
@@ -19,14 +18,10 @@ NETWORK_CUSTOM_NODES_ROOT="${NETWORK_CUSTOM_NODES_ROOT:-/workspace/custom_nodes}
 COMFY_MODELS_ROOT="${COMFY_MODELS_ROOT:-/comfyui/models}"
 COMFY_CUSTOM_NODES_ROOT="${COMFY_CUSTOM_NODES_ROOT:-/comfyui/custom_nodes}"
 RESTORE_MODELS_SCRIPT="${RESTORE_MODELS_SCRIPT:-/opt/restore-models.sh}"
-RESTORE_CUSTOM_NODES_SCRIPT="${RESTORE_CUSTOM_NODES_SCRIPT:-/opt/restore-custom-nodes.sh}"
 WORKER_START_SCRIPT="${WORKER_START_SCRIPT:-/start.sh}"
 
 echo "Restoring missing models on network volume: $NETWORK_MODELS_ROOT"
 MODELS_ROOT="$NETWORK_MODELS_ROOT" "$RESTORE_MODELS_SCRIPT"
-
-echo "Restoring custom nodes on network volume: $NETWORK_CUSTOM_NODES_ROOT"
-NETWORK_CUSTOM_NODES_ROOT="$NETWORK_CUSTOM_NODES_ROOT" "$RESTORE_CUSTOM_NODES_SCRIPT"
 
 link_model_dir() {
   local target=$1
