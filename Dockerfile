@@ -10,8 +10,17 @@ RUN cat > /opt/setup-models.sh << 'EOF'
 #!/bin/bash
 set -e
 
-NETWORK_MODELS_ROOT="${NETWORK_MODELS_ROOT:-/workspace/models}"
-NETWORK_CUSTOM_NODES_ROOT="${NETWORK_CUSTOM_NODES_ROOT:-/workspace/custom_nodes}"
+# Serverless workers always mount the network volume at /runpod-volume.
+NETWORK_MOUNT_DIR="${NETWORK_MOUNT_DIR:-/runpod-volume}"
+resolve_network_path() {
+  case "$1" in
+    /*) echo "$1" ;;
+    *) echo "$NETWORK_MOUNT_DIR/$1" ;;
+  esac
+}
+
+NETWORK_MODELS_ROOT="$(resolve_network_path "${NETWORK_MODELS_ROOT:-runpod-slim/ComfyUI/models}")"
+NETWORK_CUSTOM_NODES_ROOT="$(resolve_network_path "${NETWORK_CUSTOM_NODES_ROOT:-runpod-slim/ComfyUI/custom_nodes}")"
 COMFY_MODELS_ROOT="${COMFY_MODELS_ROOT:-/comfyui/models}"
 COMFY_CUSTOM_NODES_ROOT="${COMFY_CUSTOM_NODES_ROOT:-/comfyui/custom_nodes}"
 WORKER_START_SCRIPT="${WORKER_START_SCRIPT:-/start.sh}"
