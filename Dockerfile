@@ -57,33 +57,29 @@ mkdir -p "$COMFY_CUSTOM_NODES_ROOT"
 cd /comfyui
 link_custom_node_dir "$NETWORK_CUSTOM_NODES_ROOT" "custom_nodes"
 
-# Custom node dependencies install into a venv on the shared network volume
-# instead of the container's local disk, so workers reuse packages already
-# installed by a previous worker instead of reinstalling them every boot.
-NETWORK_CUSTOM_NODE_DEPS_ROOT="$(resolve_network_path "${NETWORK_CUSTOM_NODE_DEPS_ROOT:-runpod-slim/ComfyUI/venv-custom-nodes}")"
-mkdir -p "$(dirname "$NETWORK_CUSTOM_NODE_DEPS_ROOT")"
+# Custom node dependencies install into a directory on the shared network
+# volume instead of the container's local disk, so workers reuse packages
+# already installed by a previous worker instead of reinstalling every boot.
+# --target (not a separate venv) keeps pip aware of what /opt/venv already
+# has (torch, transformers, ...), installing only what's genuinely missing.
+NETWORK_CUSTOM_NODE_DEPS_ROOT="$(resolve_network_path "${NETWORK_CUSTOM_NODE_DEPS_ROOT:-runpod-slim/ComfyUI/custom-node-site-packages}")"
+mkdir -p "$NETWORK_CUSTOM_NODE_DEPS_ROOT"
 
 # flock serializes concurrent workers so simultaneous installs into the
-# shared venv can't corrupt each other; a crashed holder releases it for free.
+# shared directory can't corrupt each other; a crashed holder releases it for free.
 (
   flock -x 200
-
-  if [ ! -x "$NETWORK_CUSTOM_NODE_DEPS_ROOT/bin/pip" ]; then
-    echo "Creating shared custom node dependency venv: $NETWORK_CUSTOM_NODE_DEPS_ROOT"
-    python -m venv --system-site-packages "$NETWORK_CUSTOM_NODE_DEPS_ROOT"
-  fi
 
   for req in "$COMFY_CUSTOM_NODES_ROOT"/*/requirements.txt; do
     [ -f "$req" ] || continue
     echo "Installing requirements: $req"
-    "$NETWORK_CUSTOM_NODE_DEPS_ROOT/bin/pip" install --no-cache-dir -r "$req" || echo "WARNING: failed to install $req"
+    pip install --no-cache-dir --target="$NETWORK_CUSTOM_NODE_DEPS_ROOT" -r "$req" || echo "WARNING: failed to install $req"
   done
 ) 200>"$NETWORK_CUSTOM_NODE_DEPS_ROOT.lock"
 
-# Make the shared venv's packages importable from ComfyUI's own Python env.
+# Make the shared install directory importable from ComfyUI's own Python env.
 SITE_PACKAGES_DIR="$(python -c 'import site; print(site.getsitepackages()[0])')"
-NETWORK_SITE_PACKAGES_DIR="$(find "$NETWORK_CUSTOM_NODE_DEPS_ROOT/lib" -mindepth 1 -maxdepth 1 -type d -name 'python*')/site-packages"
-echo "$NETWORK_SITE_PACKAGES_DIR" > "$SITE_PACKAGES_DIR/custom-node-deps.pth"
+echo "$NETWORK_CUSTOM_NODE_DEPS_ROOT" > "$SITE_PACKAGES_DIR/custom-node-deps.pth"
 
 echo "Model and custom node symlinks setup complete"
 exec "$WORKER_START_SCRIPT"
