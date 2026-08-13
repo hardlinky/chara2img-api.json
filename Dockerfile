@@ -70,7 +70,7 @@ mkdir -p "$(dirname "$NETWORK_CUSTOM_NODE_DEPS_ROOT")"
 
   if [ ! -x "$NETWORK_CUSTOM_NODE_DEPS_ROOT/bin/pip" ]; then
     echo "Creating shared custom node dependency venv: $NETWORK_CUSTOM_NODE_DEPS_ROOT"
-    python -m venv "$NETWORK_CUSTOM_NODE_DEPS_ROOT"
+    python -m venv --system-site-packages "$NETWORK_CUSTOM_NODE_DEPS_ROOT"
   fi
 
   for req in "$COMFY_CUSTOM_NODES_ROOT"/*/requirements.txt; do
