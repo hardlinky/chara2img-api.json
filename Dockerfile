@@ -57,29 +57,47 @@ mkdir -p "$COMFY_CUSTOM_NODES_ROOT"
 cd /comfyui
 link_custom_node_dir "$NETWORK_CUSTOM_NODES_ROOT" "custom_nodes"
 
-# Custom node dependencies install into a directory on the shared network
-# volume instead of the container's local disk, so workers reuse packages
-# already installed by a previous worker instead of reinstalling every boot.
-# --target (not a separate venv) keeps pip aware of what /opt/venv already
-# has (torch, transformers, ...), installing only what's genuinely missing.
-NETWORK_CUSTOM_NODE_DEPS_ROOT="$(resolve_network_path "${NETWORK_CUSTOM_NODE_DEPS_ROOT:-runpod-slim/ComfyUI/custom-node-site-packages}")"
-mkdir -p "$NETWORK_CUSTOM_NODE_DEPS_ROOT"
+# Relocate ComfyUI's real site-packages onto the shared network volume (once,
+# fleet-wide): pip's "already installed" detection is only reliable against
+# the actual running environment, not an isolated --target/venv, so instead
+# of installing elsewhere we make the real site-packages dir itself shared.
+NETWORK_SITE_PACKAGES_DIR="$(resolve_network_path "${NETWORK_CUSTOM_NODE_DEPS_ROOT:-runpod-slim/ComfyUI/site-packages}")"
+SITE_PACKAGES_DIR="$(python -c 'import site; print(site.getsitepackages()[0])')"
+
+if [ ! -L "$SITE_PACKAGES_DIR" ]; then
+  mkdir -p "$(dirname "$NETWORK_SITE_PACKAGES_DIR")"
+  # flock guards the one-time seed copy so concurrent first-boot workers can't
+  # corrupt each other; a crashed holder releases it for free.
+  (
+    flock -x 200
+    if [ ! -d "$NETWORK_SITE_PACKAGES_DIR" ]; then
+      echo "Seeding shared site-packages: $NETWORK_SITE_PACKAGES_DIR"
+      cp -a "$SITE_PACKAGES_DIR" "$NETWORK_SITE_PACKAGES_DIR.partial" &
+      CP_PID=$!
+      while kill -0 "$CP_PID" 2>/dev/null; do
+        sleep 10
+        echo "Still copying site-packages... ($(du -sh "$NETWORK_SITE_PACKAGES_DIR.partial" 2>/dev/null | cut -f1) so far)"
+      done
+      wait "$CP_PID"
+      mv "$NETWORK_SITE_PACKAGES_DIR.partial" "$NETWORK_SITE_PACKAGES_DIR"
+      echo "Finished seeding shared site-packages"
+    fi
+  ) 200>"$NETWORK_SITE_PACKAGES_DIR.lock"
+  rm -rf "$SITE_PACKAGES_DIR"
+  ln -s "$NETWORK_SITE_PACKAGES_DIR" "$SITE_PACKAGES_DIR"
+fi
 
 # flock serializes concurrent workers so simultaneous installs into the
-# shared directory can't corrupt each other; a crashed holder releases it for free.
+# shared site-packages can't corrupt each other; a crashed holder releases it for free.
 (
   flock -x 200
 
   for req in "$COMFY_CUSTOM_NODES_ROOT"/*/requirements.txt; do
     [ -f "$req" ] || continue
     echo "Installing requirements: $req"
-    pip install --no-cache-dir --target="$NETWORK_CUSTOM_NODE_DEPS_ROOT" -r "$req" || echo "WARNING: failed to install $req"
+    pip install --no-cache-dir -r "$req" || echo "WARNING: failed to install $req"
   done
-) 200>"$NETWORK_CUSTOM_NODE_DEPS_ROOT.lock"
-
-# Make the shared install directory importable from ComfyUI's own Python env.
-SITE_PACKAGES_DIR="$(python -c 'import site; print(site.getsitepackages()[0])')"
-echo "$NETWORK_CUSTOM_NODE_DEPS_ROOT" > "$SITE_PACKAGES_DIR/custom-node-deps.pth"
+) 200>"$NETWORK_SITE_PACKAGES_DIR.lock"
 
 echo "Model and custom node symlinks setup complete"
 exec "$WORKER_START_SCRIPT"
