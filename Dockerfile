@@ -1,5 +1,5 @@
 # clean base image containing only comfyui, comfy-cli and comfyui-manager
-FROM runpod/worker-comfyui:5.8.7-base
+FROM runpod/worker-comfyui:5.8.6-base
 
 # Create model subdirectories (replaced with network-volume links at runtime)
 RUN mkdir -p /comfyui/models/checkpoints /comfyui/models/vae /comfyui/models/loras \
