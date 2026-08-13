@@ -32,14 +32,3 @@ jobs:
           tags: |
             aaulink/chara2img-api:latest
             aaulink/chara2img-api:${{ github.sha }}
-
-      - name: Deploy to RunPod serverless endpoint
-        run: |
-          curl --fail --request PATCH \
-            --url "https://api.runpod.io/v2/serverless/${RUNPOD_ENDPOINT_ID}" \
-            --header "Authorization: Bearer ${RUNPOD_API_KEY}" \
-            --header "Content-Type: application/json" \
-            --data "{\"image\": \"aaulink/chara2img-api:${GITHUB_SHA}\"}"
-        env:
-          RUNPOD_API_KEY: ${{ secrets.RUNPOD_API_KEY }}
-          RUNPOD_ENDPOINT_ID: trfqy15xtd1vrz
