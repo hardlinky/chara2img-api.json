@@ -29,4 +29,6 @@ jobs:
           secrets: |
             "CIVITAI_API_KEY=${{ secrets.CIVITAI_API_KEY }}"
           push: true
-          tags: aaulink/chara2img-api:latest
+          tags: |
+            aaulink/chara2img-api:latest
+            aaulink/chara2img-api:${{ github.sha }}
