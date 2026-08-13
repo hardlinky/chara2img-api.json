@@ -95,10 +95,18 @@ fi
 (
   flock -x 200
 
+  # Custom node requirements often declare a bare, unpinned "torch" — without
+  # a constraint, pip can silently swap the base image's carefully pinned
+  # cu128 torch build for a newer default (cu13) wheel that needs a driver
+  # version this fleet doesn't have. Freezing current versions as constraints
+  # lets pip add genuinely new packages without ever touching what's already there.
+  CONSTRAINTS_FILE="/tmp/pinned-venv-packages.txt"
+  pip freeze --local > "$CONSTRAINTS_FILE"
+
   for req in "$COMFY_CUSTOM_NODES_ROOT"/*/requirements.txt; do
     [ -f "$req" ] || continue
     echo "Installing requirements: $req"
-    pip install --no-cache-dir -r "$req" || echo "WARNING: failed to install $req"
+    pip install --no-cache-dir -c "$CONSTRAINTS_FILE" -r "$req" || echo "WARNING: failed to install $req"
   done
 ) 200>"$NETWORK_VENV_DIR.lock"
 
