@@ -65,7 +65,20 @@ link_custom_node_dir "$NETWORK_CUSTOM_NODES_ROOT" "custom_nodes"
 # intact, so only the /opt/venv absolute prefix changes (transparently, via
 # the symlink) while every internal relative-path assumption stays valid.
 NETWORK_VENV_DIR="$(resolve_network_path "${NETWORK_CUSTOM_NODE_DEPS_ROOT:-runpod-slim/ComfyUI/venv}")"
-LOCAL_VENV_DIR="$(python -c 'import sys; print(sys.prefix)')"
+# Hardcoded, not discovered via sys.prefix: bin/python is a symlink to
+# /usr/bin/python, and CPython's venv detection can fail to resolve pyvenv.cfg
+# through it, silently falling back to the SYSTEM prefix — which previously
+# caused "rm -rf" to target /usr and start deleting the NVIDIA driver.
+LOCAL_VENV_DIR="${LOCAL_VENV_DIR:-/opt/venv}"
+
+# Safety net: refuse to touch anything that isn't a plausible, dedicated venv
+# path, however LOCAL_VENV_DIR ends up being set.
+case "$LOCAL_VENV_DIR" in
+  ""|/|/usr|/usr/*|/bin|/bin/*|/lib|/lib/*|/etc|/etc/*)
+    echo "Refusing to relocate suspicious venv path: '$LOCAL_VENV_DIR'" >&2
+    exit 1
+    ;;
+esac
 
 if [ ! -L "$LOCAL_VENV_DIR" ]; then
   mkdir -p "$(dirname "$NETWORK_VENV_DIR")"
