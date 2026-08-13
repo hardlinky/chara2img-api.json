@@ -48,6 +48,14 @@ mkdir -p "$COMFY_CUSTOM_NODES_ROOT"
 cd /comfyui
 link_custom_node_dir "$NETWORK_CUSTOM_NODES_ROOT" "custom_nodes"
 
+# Custom node source lives on the shared network volume, but each container
+# has its own Python env, so dependencies must be installed here every boot.
+for req in "$COMFY_CUSTOM_NODES_ROOT"/*/requirements.txt; do
+  [ -f "$req" ] || continue
+  echo "Installing requirements: $req"
+  pip install --no-cache-dir -r "$req" || echo "WARNING: failed to install $req"
+done
+
 echo "Model and custom node symlinks setup complete"
 exec "$WORKER_START_SCRIPT"
 EOF
