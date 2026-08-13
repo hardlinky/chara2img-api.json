@@ -10,8 +10,30 @@ RUN cat > /opt/setup-models.sh << 'EOF'
 #!/bin/bash
 set -e
 
-NETWORK_MODELS_ROOT="${NETWORK_MODELS_ROOT:-/workspace/models}"
-NETWORK_CUSTOM_NODES_ROOT="${NETWORK_CUSTOM_NODES_ROOT:-/workspace/custom_nodes}"
+# Network volume mounts at different paths depending on resource type:
+# /workspace on Pods, /runpod-volume on serverless workers. Auto-detect so
+# the same subpath env vars work everywhere; NETWORK_VOLUME_ROOT can force it.
+detect_volume_root() {
+  if [ -n "${NETWORK_VOLUME_ROOT:-}" ]; then
+    echo "$NETWORK_VOLUME_ROOT"
+  elif [ -d /runpod-volume ] && [ -n "$(ls -A /runpod-volume 2>/dev/null)" ]; then
+    echo /runpod-volume
+  elif [ -d /workspace ] && [ -n "$(ls -A /workspace 2>/dev/null)" ]; then
+    echo /workspace
+  else
+    echo /runpod-volume
+  fi
+}
+
+VOLUME_ROOT="$(detect_volume_root)"
+echo "Detected network volume root: $VOLUME_ROOT"
+
+MODELS_SUBPATH="${NETWORK_MODELS_SUBPATH:-runpod-slim/ComfyUI/models}"
+CUSTOM_NODES_SUBPATH="${NETWORK_CUSTOM_NODES_SUBPATH:-runpod-slim/ComfyUI/custom_nodes}"
+
+# NETWORK_MODELS_ROOT / NETWORK_CUSTOM_NODES_ROOT remain as absolute-path overrides.
+NETWORK_MODELS_ROOT="${NETWORK_MODELS_ROOT:-$VOLUME_ROOT/$MODELS_SUBPATH}"
+NETWORK_CUSTOM_NODES_ROOT="${NETWORK_CUSTOM_NODES_ROOT:-$VOLUME_ROOT/$CUSTOM_NODES_SUBPATH}"
 COMFY_MODELS_ROOT="${COMFY_MODELS_ROOT:-/comfyui/models}"
 COMFY_CUSTOM_NODES_ROOT="${COMFY_CUSTOM_NODES_ROOT:-/comfyui/custom_nodes}"
 WORKER_START_SCRIPT="${WORKER_START_SCRIPT:-/start.sh}"
