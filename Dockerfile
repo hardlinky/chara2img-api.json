@@ -81,21 +81,31 @@ case "$LOCAL_VENV_DIR" in
 esac
 
 if [ ! -L "$LOCAL_VENV_DIR" ]; then
-  mkdir -p "$(dirname "$NETWORK_VENV_DIR")"
-  # flock guards the one-time seed copy so concurrent first-boot workers can't
-  # corrupt each other; a crashed holder releases it for free.
+  mkdir -p "$NETWORK_VENV_DIR"
+  # flock guards the seed copy so concurrent first-boot workers can't corrupt
+  # each other; a crashed holder releases it for free.
   (
     flock -x 200
-    if [ ! -d "$NETWORK_VENV_DIR" ]; then
-      echo "Seeding shared venv: $NETWORK_VENV_DIR"
-      cp -a "$LOCAL_VENV_DIR" "$NETWORK_VENV_DIR.partial" &
+    if [ ! -f "$NETWORK_VENV_DIR/.seed-complete" ]; then
+      echo "Seeding shared venv (resumable): $NETWORK_VENV_DIR"
+      # rsync (not cp): a worker killed mid-copy (e.g. execution timeout) must
+      # not lose progress. rsync only renames a file to its final name once
+      # fully transferred, so re-running after an interruption correctly
+      # skips completed files and resumes the one that was in-flight — cp's
+      # mtime-based "-u" skip logic can't tell a half-written file from a
+      # finished one and would silently leave it corrupted.
+      if ! command -v rsync >/dev/null 2>&1; then
+        echo "rsync not found; installing..."
+        apt-get update -qq && apt-get install -y -qq rsync
+      fi
+      rsync -a --partial "$LOCAL_VENV_DIR"/ "$NETWORK_VENV_DIR"/ &
       CP_PID=$!
       while kill -0 "$CP_PID" 2>/dev/null; do
         sleep 10
-        echo "Still copying venv... ($(du -sh "$NETWORK_VENV_DIR.partial" 2>/dev/null | cut -f1) so far)"
+        echo "Still copying venv... ($(du -sh "$NETWORK_VENV_DIR" 2>/dev/null | cut -f1) so far)"
       done
       wait "$CP_PID"
-      mv "$NETWORK_VENV_DIR.partial" "$NETWORK_VENV_DIR"
+      touch "$NETWORK_VENV_DIR/.seed-complete"
       echo "Finished seeding shared venv"
     fi
   ) 200>"$NETWORK_VENV_DIR.lock"
