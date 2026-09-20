@@ -3,7 +3,8 @@ FROM runpod/worker-comfyui:5.8.6-base-cuda12.8.1
 
 # Create model subdirectories (replaced with network-volume links at runtime)
 RUN mkdir -p /comfyui/models/checkpoints /comfyui/models/vae /comfyui/models/loras \
-    /comfyui/models/upscale_models /comfyui/models/ultralytics/segm /comfyui/models/ultralytics/bbox
+    /comfyui/models/upscale_models /comfyui/models/ultralytics/segm /comfyui/models/ultralytics/bbox \
+    /comfyui/models/sams
 
 # Link shared network model and custom-node directories into ComfyUI, then start the worker
 RUN cat > /opt/setup-models.sh << 'EOF'
@@ -52,6 +53,8 @@ link_model_dir "$NETWORK_MODELS_ROOT/vae" "vae"
 link_model_dir "$NETWORK_MODELS_ROOT/loras" "loras"
 link_model_dir "$NETWORK_MODELS_ROOT/upscale_models" "upscale_models"
 link_model_dir "$NETWORK_MODELS_ROOT/ultralytics" "ultralytics"
+# "sams" (plural) is the folder name Impact Pack's SAMLoader registers.
+link_model_dir "$NETWORK_MODELS_ROOT/sams" "sams"
 
 mkdir -p "$COMFY_CUSTOM_NODES_ROOT"
 cd /comfyui
