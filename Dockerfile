@@ -101,11 +101,21 @@ if [ ! -L "$LOCAL_VENV_DIR" ]; then
         echo "rsync not found; installing..."
         apt-get update -qq && apt-get install -y -qq rsync
       fi
+      # Measured once up front so each progress line can report a total.
+      VENV_TOTAL_BYTES=$(du -sb "$LOCAL_VENV_DIR" 2>/dev/null | cut -f1)
+      VENV_TOTAL_HUMAN=$(du -sh "$LOCAL_VENV_DIR" 2>/dev/null | cut -f1)
+      echo "Venv size to copy: ${VENV_TOTAL_HUMAN:-unknown}"
       rsync -a --partial "$LOCAL_VENV_DIR"/ "$NETWORK_VENV_DIR"/ &
       CP_PID=$!
       while kill -0 "$CP_PID" 2>/dev/null; do
         sleep 10
-        echo "Still copying venv... ($(du -sh "$NETWORK_VENV_DIR" 2>/dev/null | cut -f1) so far)"
+        COPIED_HUMAN=$(du -sh "$NETWORK_VENV_DIR" 2>/dev/null | cut -f1)
+        COPIED_BYTES=$(du -sb "$NETWORK_VENV_DIR" 2>/dev/null | cut -f1)
+        if [ -n "$VENV_TOTAL_BYTES" ] && [ "$VENV_TOTAL_BYTES" -gt 0 ] && [ -n "$COPIED_BYTES" ]; then
+          echo "Still copying venv... (${COPIED_HUMAN:-0} / $VENV_TOTAL_HUMAN, $((COPIED_BYTES * 100 / VENV_TOTAL_BYTES))%)"
+        else
+          echo "Still copying venv... (${COPIED_HUMAN:-0} so far)"
+        fi
       done
       wait "$CP_PID"
       touch "$NETWORK_VENV_DIR/.seed-complete"
