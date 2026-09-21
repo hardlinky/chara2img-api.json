@@ -1,6 +1,11 @@
 # clean base image containing only comfyui, comfy-cli and comfyui-manager
 FROM runpod/worker-comfyui:5.8.6-base-cuda12.8.1
 
+# The base image starts ComfyUI with "--verbose ${COMFY_LOG_LEVEL:-DEBUG}",
+# which logs a line per node import and per model-directory scan. Those scans
+# hit the network volume, so the spam is both noise and synchronous NFS work.
+ENV COMFY_LOG_LEVEL=INFO
+
 # Create model subdirectories (replaced with network-volume links at runtime)
 RUN mkdir -p /comfyui/models/checkpoints /comfyui/models/vae /comfyui/models/loras \
     /comfyui/models/upscale_models /comfyui/models/ultralytics/segm /comfyui/models/ultralytics/bbox \
@@ -126,25 +131,67 @@ if [ ! -L "$LOCAL_VENV_DIR" ]; then
   ln -s "$NETWORK_VENV_DIR" "$LOCAL_VENV_DIR"
 fi
 
-# flock serializes concurrent workers so simultaneous installs into the
-# shared venv can't corrupt each other; a crashed holder releases it for free.
-(
-  flock -x 200
+# The shared venv persists across cold starts, so re-resolving requirements
+# that are already installed is pure latency (~50s per boot: one pip process
+# per custom node, plus a "pip freeze" that stats every dist-info over NFS).
+# A content stamp of every requirements.txt lets an unchanged fleet skip the
+# whole block; it lives inside the venv, so reseeding invalidates it for free.
+REQUIREMENTS_STAMP_FILE="$NETWORK_VENV_DIR/.requirements-stamp"
+REQUIREMENTS_FINGERPRINT="$(cat "$COMFY_CUSTOM_NODES_ROOT"/*/requirements.txt 2>/dev/null | sha256sum | cut -d' ' -f1)"
 
-  # Custom node requirements often declare a bare, unpinned "torch" — without
-  # a constraint, pip can silently swap the base image's carefully pinned
-  # cu128 torch build for a newer default (cu13) wheel that needs a driver
-  # version this fleet doesn't have. Freezing current versions as constraints
-  # lets pip add genuinely new packages without ever touching what's already there.
-  CONSTRAINTS_FILE="/tmp/pinned-venv-packages.txt"
-  pip freeze --local > "$CONSTRAINTS_FILE"
+if [ "$(cat "$REQUIREMENTS_STAMP_FILE" 2>/dev/null)" = "$REQUIREMENTS_FINGERPRINT" ]; then
+  echo "Custom node requirements unchanged; skipping install"
+else
+  # flock serializes concurrent workers so simultaneous installs into the
+  # shared venv can't corrupt each other; a crashed holder releases it for free.
+  (
+    flock -x 200
 
-  for req in "$COMFY_CUSTOM_NODES_ROOT"/*/requirements.txt; do
-    [ -f "$req" ] || continue
-    echo "Installing requirements: $req"
-    pip install --no-cache-dir -c "$CONSTRAINTS_FILE" -r "$req" || echo "WARNING: failed to install $req"
-  done
-) 200>"$NETWORK_VENV_DIR.lock"
+    # Re-read under the lock: a worker that was queued behind the installer
+    # would otherwise redo the work it just waited for.
+    if [ "$(cat "$REQUIREMENTS_STAMP_FILE" 2>/dev/null)" = "$REQUIREMENTS_FINGERPRINT" ]; then
+      echo "Custom node requirements installed by a concurrent worker; skipping"
+    else
+      # Custom node requirements often declare a bare, unpinned "torch" — without
+      # a constraint, pip can silently swap the base image's carefully pinned
+      # cu128 torch build for a newer default (cu13) wheel that needs a driver
+      # version this fleet doesn't have. Freezing current versions as constraints
+      # lets pip add genuinely new packages without ever touching what's already there.
+      CONSTRAINTS_FILE="/tmp/pinned-venv-packages.txt"
+      pip freeze --local > "$CONSTRAINTS_FILE"
+
+      REQUIREMENT_ARGS=()
+      for req in "$COMFY_CUSTOM_NODES_ROOT"/*/requirements.txt; do
+        [ -f "$req" ] || continue
+        echo "Installing requirements: $req"
+        REQUIREMENT_ARGS+=(-r "$req")
+      done
+
+      INSTALL_OK=1
+      if [ "${#REQUIREMENT_ARGS[@]}" -gt 0 ]; then
+        # One resolver pass for all nodes: pip startup and resolution dominate
+        # the cost, and the per-node loop paid it once per requirements file.
+        if ! pip install -q --no-cache-dir -c "$CONSTRAINTS_FILE" "${REQUIREMENT_ARGS[@]}"; then
+          # One unsatisfiable file must not block the others, so fall back to
+          # the per-file loop the combined install replaced.
+          echo "WARNING: combined install failed; retrying per custom node"
+          for req in "$COMFY_CUSTOM_NODES_ROOT"/*/requirements.txt; do
+            [ -f "$req" ] || continue
+            pip install -q --no-cache-dir -c "$CONSTRAINTS_FILE" -r "$req" || {
+              echo "WARNING: failed to install $req"
+              INSTALL_OK=0
+            }
+          done
+        fi
+      fi
+
+      # Only stamp a clean run; a partial install must be retried next boot.
+      if [ "$INSTALL_OK" -eq 1 ]; then
+        printf '%s' "$REQUIREMENTS_FINGERPRINT" > "$REQUIREMENTS_STAMP_FILE"
+      fi
+    fi
+  ) 200>"$NETWORK_VENV_DIR.lock"
+fi
 
 echo "Model and custom node symlinks setup complete"
 exec "$WORKER_START_SCRIPT"
